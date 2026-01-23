@@ -11,6 +11,7 @@ El objetivo es realizar las configuraciones iniciales para el curso de capacitac
 - `data/processed/`: Contiene las bases de datos "limpias".
 - `scripts/`: Contiene los scripts utilizados en el módulo.
 - `Modulo1_Curso_R.Rproj`: Archivo maestro del proyecto. **Ábrelo siempre para trabajar.**
+- `documents/`: Archivo maestro del proyecto.
 
 ---
 
