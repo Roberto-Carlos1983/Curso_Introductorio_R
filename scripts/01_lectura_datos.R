@@ -20,6 +20,10 @@ library(help = "datasets")
 View(Titanic)
 ?Titanic
 
+data_titanic <- data.frame(Titanic)
+sum(data_titanic$Freq)
+aggregate(Freq ~ Sex, data = data_titanic, sum)
+
 # =========================================================
 # Título: Sesión 2 - Instalando librerias y cargando información
 # Propósito: Conocer RStudio
