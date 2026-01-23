@@ -3,11 +3,13 @@
 # Propósito: Conocer RStudio
 # =========================================================
 
-#Conociendo el panel de RStudio
+#Entorno de Desarrollo Integrado (Integrated Development Environment (IDE))
+
+#1. Conociendo el panel de RStudio
 
 #https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html
 
-#Código en R
+#2. Código en R
 
 View(mtcars)
 summary(mtcars)
