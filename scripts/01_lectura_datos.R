@@ -1,7 +1,33 @@
 # =========================================================
-# Título: Sesión 1 - Lectura y Validación Inicial
-# Propósito: Cargar bases de datos de matrícula 2026
+# Título: Sesión 1 - Conociendo RStudio
+# Propósito: Conocer RStudio
 # =========================================================
+
+#Conociendo el panel de RStudio
+
+#https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html
+
+#Código en R
+
+View(mtcars)
+summary(mtcars)
+?mtcars
+?summary
+?View
+
+library(help = "datasets")
+
+View(Titanic)
+?Titanic
+
+# =========================================================
+# Título: Sesión 2 - Instalando librerias y cargando información
+# Propósito: Conocer RStudio
+# =========================================================
+
+
+
+
 
 # 1. CARGA DE LIBRERÍAS ----
 # Si no las tienen, deben instalarlas con: install.packages("here")
