@@ -103,5 +103,21 @@ class(carros$mpg)
 class(carros$gear)
 summary(carros)
 
+library(foreign)
+ehpm2024 <- read.spss("data/raw/EHPM 2024.sav")
 
+library(haven)
+ehpm2024 <- read_sav("data/raw/EHPM 2024.sav")
+class(ehpm2024$r107)
+table(ehpm2024$r107)
+
+library(labelled)
+var_label(ehpm2024$r107)
+val_labels(ehpm2024$r107)
+print_labels(ehpm2024$r107)
+
+# Buscar variables de análisis
+library(labelled)
+busqueda <- look_for(ehpm2024, "subempleo")
+print(busqueda)
 
