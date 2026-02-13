@@ -12,6 +12,7 @@ El objetivo es realizar las configuraciones iniciales para el curso de capacitac
 - `scripts/`: Contiene los scripts utilizados en el módulo.
 - `Modulo1_Curso_R.Rproj`: Archivo maestro del proyecto. **Ábrelo siempre para trabajar.**
 - `documents/`: Documentación adicional informativa.
+- `slides/` : Presentaciones
 
 ---
 

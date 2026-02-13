@@ -1,0 +1,103 @@
+---
+title: "Introducción al Lenguaje R"
+author: "Roberto Rodríguez"
+format: 
+  revealjs:
+    theme: serif
+    transition: slide
+    scrollable: true
+    logo: https://www.r-project.org/logo/Rlogo.png
+---
+
+## 1. El Origen: De la "S" a la "R"
+
+R es el heredero de una larga tradición en laboratorios de investigación.
+
+-   **Creadores:** Ross Ihaka y Robert Gentleman (Univ. de Auckland).
+-   **Lanzamiento:** Conceptualizado en **1992**, liberado en **1995**.
+-   **El ADN:** Es la implementación de código abierto del lenguaje **S**.
+-   **Evolución:** Pasó de ser una herramienta académica a ser el estándar en **Ciencia de Datos** y **Bioinformática**.
+
+------------------------------------------------------------------------
+
+## 2. ¿Qué es R?
+
+> "R es un entorno y lenguaje de programación para computación estadística y gráficos."
+
+### Características clave:
+
+1.  **Interpretado:** Ejecutas código y ves resultados al instante.
+2.  **Basado en Objetos:** Todo en R es un objeto con el que puedes interactuar.
+3.  **Especializado:** A diferencia de Python, R fue diseñado **específicamente** para el análisis de datos.
+
+------------------------------------------------------------------------
+
+## 3. ¿Por qué elegir R?
+
+-   **CRAN:** Más de 18,000 paquetes para cualquier tipo de análisis.
+-   **Visualización:** Gráficos de nivel editorial (gracias a `ggplot2`).
+-   **Comunidad:** Grupos globales como **#RStats**.
+-   **Reproducibilidad:** Puedes mezclar texto, código y resultados en un solo documento.
+
+## 4. Ejemplo: Presentación + código
+
+```{r}
+#| label: Grafico
+#| echo: true
+#| message: false
+#| warning: false
+#| fig-align: center
+library(ggplot2)
+
+# Usamos el dataset 'mpg' (eficiencia de combustible)
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Eficiencia vs. Tamaño del Motor",
+    x = "Cilindrada (Litros)",
+    y = "Millas por Galón",
+    color = "Tracción"
+  ) +
+  theme_minimal()
+```
+
+## 5.R vs. RStudio: ¿Cuál es la diferencia?
+
+**R (El Motor):**
+
+-   Es el lenguaje de programación y el motor estadístico.
+
+-   Es lo que hace los cálculos, procesa los datos y crea los gráficos.
+
+-   Sin R, no hay nada que ejecutar.
+
+**RStudio (El Tablero/Cabina):**
+
+-   Es el IDE (Entorno de Desarrollo Integrado).
+
+-   Es una interfaz visual diseñada para que programar en R sea más cómodo, organizado y eficiente.
+
+-   Provee paneles para ver el código, los gráficos, los archivos y el historial, todo en un solo lugar.
+
+**Otros Entornos (IDE) para R**
+
+-   **VS Code (Visual Studio Code)**: Muy popular actualmente. Es ligero y versátil, ideal si ya programas en otros lenguajes como Python o JavaScript.
+
+-   **Positron**: El nuevo IDE de la empresa Posit (los mismos que crearon RStudio). Está basado en VS Code pero optimizado específicamente para ciencia de datos.
+
+-   **Jupyter Notebooks**: Muy usado en entornos compartidos y en la nube, permite crear documentos interactivos por bloques.
+
+-   **R GUI**: La interfaz básica que se instala por defecto con R. Es muy limitada y casi no se usa profesionalmente hoy en día.
+
+## 6. Descarga de R y RStudio
+
+Los sitios de descarga son:
+
+- **R:** <https://cran.r-project.org/bin/windows/base/>
+
+- **RStudio:** <https://posit.co/download/rstudio-desktop/>
+
+## 7. Conociendo el panel de RStudio
+
+<https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html>
