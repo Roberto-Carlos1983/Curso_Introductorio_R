@@ -97,16 +97,42 @@ plot(mtcars$wt, mtcars$mpg, main="Gráfico Base")
 
 #Código paquete ggplot2
 library(ggplot2)
-ggplot(mtcars, aes(x = wt, y = mpg)) + 
+mtcars
+ggplot(mtcars, aes(x = wt, y = mpg, colour = factor(cyl), shape = factor(cyl))) + 
   geom_point() + 
   labs(title = "Gráfico con ggplot2") +
-  theme_minimal()
+  theme_minimal() +
+  scale_colour_manual(values = c("4" = "#fee0d2", 
+                                 "6" = "#fc9272", 
+                                 "8" = "#de2d26"))
+
+#https://r-charts.com/colors/
+#https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
+
+ggplot(mtcars, aes(x = wt, y = mpg, colour = factor(cyl), shape = factor(cyl))) + 
+  geom_point(size = 3) + 
+  labs(title = "Paleta: ColorBrewer (Set1)") +
+  theme_minimal() +
+  # Cambia 'manual' por 'brewer' y elige una paleta
+  scale_colour_discrete()
+#scale_colour_discrete()
+#scale_colour_viridis_d()
+#scale_colour_brewer(palette = "Set1")
 
 # 2. Configuración de rutas para lectura de archivos
 
+#Configuración con ruta extensa
 # Con setwd, usar doble \\ en cada lugar donde se ingrese a una nueva carpeta
 setwd("")
 
+#Si no se trabaja por proyectos, file.choose() es util para ubicar la ruta en el computador
+#Se ejecuta file.choose() sin ningún argumento
+
+file.choose()
+
+datos <- read_csv("copiar ruta")
+
+#Configuración con ruta relativa
 # Trabajando por proyectos, todo archivo guargado en la misma carpeta del proyecto
 # se cargará de forma directa. Si está dentro de una carpeta, se genera el código 
 # con la identificación de la carpeta
@@ -115,28 +141,46 @@ read.csv("dataset/ultimos/base_datos.csv")
 
 # 3. Lectura de datos
 
+#Lectura de archivos en formato CSV
 read.csv()
+file.choose()
+matricula <- read.csv()
 
+#Lectura de archivos en formato Excel
 library(readxl)
 read_xlsx()
 readxl::read_xlsx()
+remesas <- readxl::read_xlsx("data/raw/Ingresos_mensuales_de_remesas_familiares.xlsx")
+library(here)
+here()
+remesas <- readxl::read_xlsx(here("data", "raw","Ingresos_mensuales_de_remesas_familiares.xlsx"))
 
+#Lectura de archivos en formato SPSS
 library(foreign)
 read.spss()
 foreign::read.spss()
+ehpm2024 <- read.spss("data/raw/EHPM 2024.sav")
 
+library(haven)
 haven::read_stata()
+ehpm2024 <- read_sav("data/raw/EHPM 2024.sav")
+class(ehpm2024$r107)
+table(ehpm2024$r107)
 
-#Si no se trabaja por proyectos, file.choose() es util para ubicar la ruta en el computador
-#Se ejecuta file.choose() sin ningún argumento
- 
-file.choose()
+#Lectura desde una página web
+# 1. Instalar y cargar la librería
+install.packages("rvest")
+library(rvest)
+# 2. Definir la URL
+url <- "https://estadisticas.bcr.gob.sv/serie/ingresos-mensuales-de-remesas-familiares"
 
-datos <- read_csv("copiar ruta")
+# 3. Leer el HTML y extraer las tablas
+pagina <- read_html(url)
+tablas <- html_table(pagina)
 
-library(here)
-here()
-matricula <- read.csv(here("data", "raw","Muestra2025.csv"))
+# 4. Ver donde están los datos y apuntar al número de la tabla
+tablas
+remesas_web <- tablas[[3]]
 
 # 4. Exploración inicial ----
 carros <- data.frame(mtcars)
