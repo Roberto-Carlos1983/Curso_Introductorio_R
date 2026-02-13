@@ -12,24 +12,44 @@
 
 # 2. Código en R
 
+#Primer ejemplo
 View(mtcars)
-summary(mtcars,digits=4, quantile.type = 1)
+summary(mtcars, digits=3)
 ?mtcars
 ?summary
 ?View
 
+#Datasets disponibles pre cargados en RStudio
 library(help = "datasets")
 
+#Segundo ejemplo
 View(Titanic)
 ?Titanic
-
 data_titanic <- data.frame(Titanic)
 sum(data_titanic$Freq)
 aggregate(Freq ~ Sex+Survived, data = data_titanic, sum)
 ?aggregate
 
+#Tercer ejemplo
 iris
 ?iris
+table(iris$Sepal.Width, iris$Species)
+data_iris <- data.frame(iris)
+data_iris |> 
+  dplyr::group_by(Species,Sepal.Width) |> 
+  dplyr::summarise(Ancho=dplyr::n()) |> 
+  print(n=100)
+
+#Cuarto ejemplo
+matricula <- read.csv("data/raw/Muestra2025.csv")
+table(matricula$NIVEL_EDUCATIVO)
+
+ggplot(matricula,aes(x = NIVEL_EDUCATIVO)) +
+  geom_bar()
+
+plotly::plot_ly(matricula,
+                x = ~NIVEL_EDUCATIVO,
+                type = "histogram")
 
 # =========================================================
 # Título: Sesión 2 - Librerias, instalación de librerias y cargando información
@@ -50,6 +70,7 @@ library(tidyverse)
 
 ls("package:dplyr")
 
+#Primer ejemplo
 data_titanic[2,]
 data_titanic |> 
   slice(2)
@@ -57,6 +78,29 @@ data_titanic |>
 data_titanic[10:13,"Class"]
 data_titanic |> 
   slice(10:13)
+
+#Segundo ejemplo
+
+library(dplyr)
+?mtcars
+table(mtcars$cyl)
+#Código base R
+resultado_base <- mtcars[mtcars$cyl > 6, ]
+#Código paquete dplyr
+resultado_tidy <- mtcars %>% 
+  filter(cyl > 6)
+
+#Tercer ejemplo
+
+#Código base R
+plot(mtcars$wt, mtcars$mpg, main="Gráfico Base")
+
+#Código paquete ggplot2
+library(ggplot2)
+ggplot(mtcars, aes(x = wt, y = mpg)) + 
+  geom_point() + 
+  labs(title = "Gráfico con ggplot2") +
+  theme_minimal()
 
 # 2. Configuración de rutas para lectura de archivos
 
@@ -89,6 +133,10 @@ haven::read_stata()
 file.choose()
 
 datos <- read_csv("copiar ruta")
+
+library(here)
+here()
+matricula <- read.csv(here("data", "raw","Muestra2025.csv"))
 
 # 4. Exploración inicial ----
 carros <- data.frame(mtcars)
