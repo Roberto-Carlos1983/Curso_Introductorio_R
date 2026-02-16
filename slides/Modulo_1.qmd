@@ -16,7 +16,7 @@ R es el heredero de una larga tradición en laboratorios de investigación.
 -   **Creadores:** Ross Ihaka y Robert Gentleman (Univ. de Auckland).
 -   **Lanzamiento:** Conceptualizado en **1992**, liberado en **1995**.
 -   **El ADN:** Es la implementación de código abierto del lenguaje **S**.
--   **Evolución:** Pasó de ser una herramienta académica a ser el estándar en **Ciencia de Datos** y **Bioinformática**.
+-   **Evolución:** Pasó de ser una herramienta académica a ser el estándar en **Ciencia de Datos** y **Bioinformática**, además de sus amplios usos en ciencias sociales, finanzas, entre otros.
 
 ------------------------------------------------------------------------
 
@@ -94,9 +94,9 @@ ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
 
 Los sitios de descarga son:
 
-- **R:** <https://cran.r-project.org/bin/windows/base/>
+-   **R:** <https://cran.r-project.org/bin/windows/base/>
 
-- **RStudio:** <https://posit.co/download/rstudio-desktop/>
+-   **RStudio:** <https://posit.co/download/rstudio-desktop/>
 
 ## 7. Conociendo el panel de RStudio
 

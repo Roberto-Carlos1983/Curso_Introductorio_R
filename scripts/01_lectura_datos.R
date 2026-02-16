@@ -12,12 +12,30 @@
 
 # 2. Código en R
 
-#Primer ejemplo
+#Primer ejemplo (funciones)
 View(mtcars)
 summary(mtcars, digits=3)
 ?mtcars
 ?summary
 ?View
+seq(from = 2, to = 10, by = 2)
+seq(2,10,2)
+?seq
+seq
+seq.default
+page(seq.default)
+
+# Función "calcular_iva" con el precio como argumento
+
+calcular_iva <- function(precio) {
+  resultado <- precio * 0.13  
+  return(resultado)           
+}
+calcular_iva(100)
+
+# Usamos nuestra función
+calcular_iva(100) 
+# Resultado: [1] 13
 
 #Datasets disponibles pre cargados en RStudio
 library(help = "datasets")
@@ -26,6 +44,7 @@ library(help = "datasets")
 View(Titanic)
 ?Titanic
 data_titanic <- data.frame(Titanic)
+dim(data_titanic)
 sum(data_titanic$Freq)
 aggregate(Freq ~ Sex+Survived, data = data_titanic, sum)
 ?aggregate
@@ -168,25 +187,27 @@ class(ehpm2024$r107)
 table(ehpm2024$r107)
 
 #Lectura desde una página web
-# 1. Instalar y cargar la librería
+# a. Instalar y cargar la librería
 install.packages("rvest")
 library(rvest)
-# 2. Definir la URL
+# b. Definir la URL
 url <- "https://estadisticas.bcr.gob.sv/serie/ingresos-mensuales-de-remesas-familiares"
 
-# 3. Leer el HTML y extraer las tablas
+# c. Leer el HTML y extraer las tablas
 pagina <- read_html(url)
 tablas <- html_table(pagina)
 
-# 4. Ver donde están los datos y apuntar al número de la tabla
+# d. Ver donde están los datos y apuntar al número de la tabla
 tablas
 remesas_web <- tablas[[3]]
 
 # 4. Exploración inicial ----
+
+#Primer ejemplo
 carros <- data.frame(mtcars)
 
-head(carros)
-tail(carros)    # Ver las primeras 6 filas
+head(carros,10)   # Ver las primeras n filas
+tail(carros)      # Ver las primeras 6 filas
 
 library(tidyverse)
 glimpse(carros) # Ver estructura de columnas y tipos de datos
@@ -195,8 +216,15 @@ class(carros$mpg)
 class(carros$gear)
 summary(carros)
 
+#Segundo ejemplo
 library(foreign)
 ehpm2024 <- read.spss("data/raw/EHPM 2024.sav")
+ehpm2024 <- data.frame(read.spss("data/raw/EHPM 2024.sav"))
+ehpm2024 <- read.spss("data/raw/EHPM 2024.sav",use.value.labels = ,to.data.frame = )
+glimpse(ehpm2024)
+glimpse(ehpm2024[,c("r106","r107")])
+str(ehpm2024)
+class(ehpm2024$r107)
 
 library(haven)
 ehpm2024 <- read_sav("data/raw/EHPM 2024.sav")
@@ -208,8 +236,21 @@ var_label(ehpm2024$r107)
 val_labels(ehpm2024$r107)
 print_labels(ehpm2024$r107)
 
-# Buscar variables de análisis
+#Buscar variables de análisis
 library(labelled)
 busqueda <- look_for(ehpm2024, "subempleo")
+busqueda <- look_for(ehpm2024, c("ingreso","subempleo"))
 print(busqueda)
+
+#Tercer ejemplo
+library(ggplot2)
+library(dplyr)
+?msleep
+df <- msleep
+glimpse(df)
+
+#Cuarto ejemplo
+netflix <- read.csv("data/raw/netflix_titles.csv")
+glimpse(netflix)
+
 
