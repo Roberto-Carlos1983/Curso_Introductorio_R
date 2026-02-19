@@ -25,17 +25,13 @@ seq
 seq.default
 page(seq.default)
 
-# Función "calcular_iva" con el precio como argumento
+#Cálculo de una función "calcular_iva" con el precio como argumento
 
 calcular_iva <- function(precio) {
   resultado <- precio * 0.13  
   return(resultado)           
 }
 calcular_iva(100)
-
-# Usamos nuestra función
-calcular_iva(100) 
-# Resultado: [1] 13
 
 #Datasets disponibles pre cargados en RStudio
 library(help = "datasets")
@@ -52,7 +48,9 @@ aggregate(Freq ~ Sex+Survived, data = data_titanic, sum)
 #Tercer ejemplo
 iris
 ?iris
+table(iris$Sepal.Width)
 table(iris$Sepal.Width, iris$Species)
+args(table)
 data_iris <- data.frame(iris)
 data_iris |> 
   dplyr::group_by(Species,Sepal.Width) |> 
@@ -60,6 +58,23 @@ data_iris |>
   print(n=100)
 
 #Cuarto ejemplo
+datos <- c(1, 2, 2,10 ,5, 8,9,NA)
+table(datos)
+# Cambiando el valor por defecto
+table(datos, useNA = "ifany")
+
+mean(datos)
+args(mean)
+?mean
+mean(datos,na.rm = TRUE)
+
+x <- c(0:10, 50)
+xm <- mean(x)
+c(xm, mean(x, trim = 0.10))
+
+mean(c(1,2,3,4,5,6,7,8,9,10))
+
+#Quinto ejemplo
 matricula <- read.csv("data/raw/Muestra2025.csv")
 table(matricula$NIVEL_EDUCATIVO)
 
@@ -69,6 +84,20 @@ ggplot(matricula,aes(x = NIVEL_EDUCATIVO)) +
 plotly::plot_ly(matricula,
                 x = ~NIVEL_EDUCATIVO,
                 type = "histogram")
+
+#Sexto ejemplo
+#Uso de corchetes []
+
+x <- data.frame(Nombres=c("Pablo","Veronica"),
+                Años=c(42,15))
+
+y <- dplyr::tribble(
+  ~Nombres, ~Años,
+  "Pablo"    , 42,
+  "Veronica" , 15,
+)
+#[Fila, Columna]
+x[2,2]
 
 # =========================================================
 # Título: Sesión 2 - Librerias, instalación de librerias y cargando información
@@ -170,9 +199,20 @@ library(readxl)
 read_xlsx()
 readxl::read_xlsx()
 remesas <- readxl::read_xlsx("data/raw/Ingresos_mensuales_de_remesas_familiares.xlsx")
+
+#Archivo Excel con here()
+
 library(here)
 here()
+setwd("C:\\BK ROBERTO RODRIGUEZ\\MINED\\CENSO_2026-SIGES-OFICIAL")
 remesas <- readxl::read_xlsx(here("data", "raw","Ingresos_mensuales_de_remesas_familiares.xlsx"))
+remesas_procesado <- remesas[3:4,]
+library(janitor)
+remesas_procesado <- remesas_procesado |> 
+  row_to_names(row_number = 1)
+
+colnames(remesas) <- remesas[3,]
+remesas_procesado <- remesas[-c(1,2,3,5),]
 
 #Lectura de archivos en formato SPSS
 library(foreign)
@@ -250,7 +290,7 @@ df <- msleep
 glimpse(df)
 
 #Cuarto ejemplo
-netflix <- read.csv("data/raw/netflix_titles.csv")
+netflix <- read.csv(here("data/raw/netflix_titles.csv"))
 glimpse(netflix)
 
 

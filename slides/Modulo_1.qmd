@@ -9,6 +9,18 @@ format:
     logo: https://www.r-project.org/logo/Rlogo.png
 ---
 
+## 0. Curso introductorio R
+
+> **Objetivo:** Entender el lenguaje de programación R y aplicarlo al análisis de información.
+
+-   **Introducción, lectura y tipos de datos.** Entender los fundamentos de R, conocer RStudio y tipos de datos del lenguaje.
+-   **Manipulación de datos.** Filtrar datos, selccionar variables, crear variables, ordenar, resumir. Unir bases de datos.
+-   **Validación y limpieza.** Tratamiento de fechas, limpieza de nombres, NAs.
+-   **Gráficos.** Convertir datos en gráficos estáticos y dinámicos.
+-   **Encuesta de Hogares de Propósitos Múltiples y Censo de Población y Vivienda.** Explotar las bases de datos.
+
+------------------------------------------------------------------------
+
 ## 1. El Origen: De la "S" a la "R"
 
 R es el heredero de una larga tradición en laboratorios de investigación.
