@@ -119,13 +119,15 @@ library(tidyverse)
 ls("package:dplyr")
 
 #Primer ejemplo
+Titanic
 data_titanic[2,]
 data_titanic |> 
   slice(2)
 
 data_titanic[10:13,"Class"]
 data_titanic |> 
-  slice(10:13)
+  slice(10:13) |> 
+  select(Class)
 
 #Segundo ejemplo
 
@@ -141,7 +143,7 @@ resultado_tidy <- mtcars %>%
 #Tercer ejemplo
 
 #Código base R
-plot(mtcars$wt, mtcars$mpg, main="Gráfico Base")
+plot(mtcars$wt, mtcars$mpg, main="Gráfico Base",col=mtcars$cyl,pch=19)
 
 #Código paquete ggplot2
 library(ggplot2)
@@ -162,7 +164,7 @@ ggplot(mtcars, aes(x = wt, y = mpg, colour = factor(cyl), shape = factor(cyl))) 
   labs(title = "Paleta: ColorBrewer (Set1)") +
   theme_minimal() +
   # Cambia 'manual' por 'brewer' y elige una paleta
-  scale_colour_discrete()
+  scale_colour_brewer(palette = "Blues")
 #scale_colour_discrete()
 #scale_colour_viridis_d()
 #scale_colour_brewer(palette = "Set1")
