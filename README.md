@@ -1,18 +1,23 @@
-¡Bienvenid@ al repositorio oficial del Módulo 1! Aquí encontrarás todo el material, datos y scripts que utilizaremos en clase. El objetivo de usar GitHub es que siempre tengas la versión más reciente del curso de forma organizada.
+¡Bienvenid@ al repositorio oficial del Curso Introductorio de R! Aquí encontrarás todo el material, datos y scripts que utilizaremos en clase. El objetivo de usar GitHub es que siempre tengas la versión más reciente del curso de forma organizada.
 
-# 📊 Módulo 1: Introducción a R - Curso 2026
+El Curso contiene los siguientes módulos:
+
+# 📊 Módulo 1: Introducción, lectura y tipos de datos
+# 📊 Módulo 2: Manipulación de datos
+# 📊 Módulo 3: Validación y limpieza
+# 📊 Módulo 4: Gráficos 
+# 📊 Módulo 5: Encuesta de Hogares de Propósitos Múltiples y Censo de Población y Vivienda
 
 ## Descripción
-Este proyecto contiene los ejercicios para el primer módulo de capacitación en R. 
-El objetivo es realizar las configuraciones iniciales para el curso de capacitación, conocer RStudio, cargar datos y reconocer tipo de datos.
+Este proyecto contiene toda la documentación para el Curso Introductorio de R. 
 
-## Estructura del Proyecto del Módulo 1
+## Estructura del Proyecto
 - `data/raw/`: Contiene las bases de datos "sucias".
 - `data/processed/`: Contiene las bases de datos "limpias".
-- `scripts/`: Contiene los scripts utilizados en el módulo.
-- `Modulo1_Curso_R.Rproj`: Archivo maestro del proyecto. **Ábrelo siempre para trabajar.**
 - `documents/`: Documentación adicional informativa.
+- `scripts/`: Contiene los scripts utilizados.
 - `slides/` : Presentaciones
+- `Curso_Introductorio_R.Rproj`: Archivo maestro del proyecto. **Ábrelo siempre para trabajar.**
 
 ---
 
