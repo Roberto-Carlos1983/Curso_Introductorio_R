@@ -23,8 +23,6 @@ format:
 
 ## 1. El Origen: De la "S" a la "R"
 
-R es el heredero de una larga tradición en laboratorios de investigación.
-
 -   **Creadores:** Ross Ihaka y Robert Gentleman (Univ. de Auckland).
 -   **Lanzamiento:** Conceptualizado en **1992**, liberado en **1995**.
 -   **El ADN:** Es la implementación de código abierto del lenguaje **S**.
@@ -102,7 +100,14 @@ ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
 
 -   **R GUI**: La interfaz básica que se instala por defecto con R. Es muy limitada y casi no se usa profesionalmente hoy en día.
 
-## 6. Descarga de R y RStudio
+## 6. Referencias
+
+- Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2e). **R for Data Science**.
+- Crawley, M. (2007). **The R Book**.
+- Paradis, E. (2005). **R for Beginners**.
+- <https://atelierdecodigo.com/posts/libros-aprender-ciencia-datos.html>
+
+## 7. Descarga de R y RStudio
 
 Los sitios de descarga son:
 
@@ -110,6 +115,6 @@ Los sitios de descarga son:
 
 -   **RStudio:** <https://posit.co/download/rstudio-desktop/>
 
-## 7. Conociendo el panel de RStudio
+## 8. Conociendo el panel de RStudio
 
 <https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html>
