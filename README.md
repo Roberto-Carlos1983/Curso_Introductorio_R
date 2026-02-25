@@ -38,8 +38,10 @@ de R.
 
 ## 🛠️ Requisitos Previos
 
-Antes de empezar, asegúrate de tener instalado: 1. **R** 2. **RStudio
-Desktop** 3. **Git** ([Descárgalo aquí](https://git-scm.com/downloads))
+Antes de empezar, asegúrate de tener instalado:
+1. **R**
+2. **RStudio Desktop**
+3. **Git** ([Descárgalo aquí](https://git-scm.com/downloads))
 
 ------------------------------------------------------------------------
 
@@ -70,21 +72,20 @@ bloquee con "conflictos de versión", sigue estas dos reglas:
 ## 🔄 Cómo recibir actualizaciones (Pull)
 
 Cuando actualice bases de datos, scripts o cualquier información de este
-módulo, tu debes realizar lo siguiente desde tu sesión de RStudio: 1. Ve
-a la pestaña **Git** (arriba a la derecha en RStudio). 2. Haz clic en la
-**flecha azul hacia abajo (Pull)**. 3. ¡Listo! Los archivos nuevos
-aparecerán mágicamente en tu computadora.
+módulo, tu debes realizar lo siguiente desde tu sesión de RStudio:
+1. Ve a la pestaña **Git** (arriba a la derecha en RStudio).
+2. Haz clic en la **flecha azul hacia abajo (Pull)**.
+3. ¡Listo! Los archivos nuevos aparecerán mágicamente en tu computadora.
 
 ------------------------------------------------------------------------
 
 ## 🆘 SOS: En caso de errores
 
 Si hiciste cambios por error en un archivo original y el botón **Pull**
-te da un error rojo: 1. En la pestaña **Git**, haz clic derecho sobre el
-archivo problemático. 2. Selecciona **Revert...**. (Esto borrará tus
-cambios locales en ese archivo y lo dejará como el original). 3. Intenta
-el **Pull** de nuevo. 4. *Si nada funciona:* Borra la carpeta del curso
-en tu PC y vuelve a **Clonar** el proyecto. ¡Es la solución más rápida!
+te da un error rojo:
+1. En la pestaña **Git**, haz clic derecho sobre el archivo problemático.
+2. Selecciona **Revert...**. (Esto borrará tus cambios locales en ese archivo y lo dejará como el original).
+3. Intenta el **Pull** de nuevo. 4. *Si nada funciona:* Borra la carpeta del curso en tu PC y vuelve a **Clonar** el proyecto. ¡Es la solución más rápida!
 
 ------------------------------------------------------------------------
 
