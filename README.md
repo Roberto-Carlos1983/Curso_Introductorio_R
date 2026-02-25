@@ -81,11 +81,12 @@ módulo, tu debes realizar lo siguiente desde tu sesión de RStudio:
 Si hiciste cambios por error en un archivo original y el botón **Pull** te da un error rojo:
 1. En la pestaña **Git**, haz clic derecho sobre el archivo problemático.
 2. Selecciona **Revert...**. (Esto borrará tus cambios locales en ese archivo y lo dejará como el original).
-3. Intenta el **Pull** de nuevo. 4. *Si nada funciona:* Borra la carpeta del curso en tu PC y vuelve a **Clonar** el proyecto. ¡Es la solución más rápida!
+3. Intenta el **Pull** de nuevo.
+4. *Si nada funciona:* Borra la carpeta del curso en tu PC y vuelve a **Clonar** el proyecto. ¡Es la solución más rápida!
 
 ------------------------------------------------------------------------
 
 ## Contacto
 
 Dudas o soporte:
-[roberto.rodriguez\@mined.gob.sv](mailto:roberto.rodriguez@mined.gob.sv){.email}
+[roberto.rodriguez@mined.gob.sv](mailto:roberto.rodriguez@mined.gob.sv)
