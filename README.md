@@ -1,7 +1,4 @@
-¡Bienvenid\@ al repositorio oficial del Curso Introductorio de R! Aquí
-encontrarás todo el material, datos y scripts que utilizaremos en clase.
-El objetivo de usar GitHub es que siempre tengas la versión más reciente
-del curso de forma organizada.
+¡Bienvenid\@ al repositorio oficial del Curso Introductorio de R! Aquí encontrarás todo el material, datos y scripts que utilizaremos en clase. El objetivo de usar GitHub es que siempre tengas la versión más reciente del curso de forma organizada.
 
 El Curso contiene los siguientes módulos:
 
@@ -48,10 +45,10 @@ Antes de empezar, asegúrate de tener instalado:
 ## 📥 Cómo obtener el material (Clonar)
 
 Para tener este proyecto en tu computadora, no descargues un ZIP. Sigue
-estos pasos en RStudio: 1. Ve a **File \> New Project \> Version Control
-\> Git**. 2. En **Repository URL**, pega este enlace:
-`https://github.com/Roberto-Carlos1983/Modulo1_Curso_R.git` 3. Elige la
-carpeta donde quieres guardarlo y haz clic en **Create Project**.
+estos pasos en RStudio:
+1. Ve a **File \> New Project \> Version Control\> Git**.
+2. En **Repository URL**, pega este enlace: `https://github.com/Roberto-Carlos1983/Modulo1_Curso_R.git`
+3. Elige la carpeta donde quieres guardarlo y haz clic en **Create Project**.
 
 ------------------------------------------------------------------------
 
@@ -81,8 +78,7 @@ módulo, tu debes realizar lo siguiente desde tu sesión de RStudio:
 
 ## 🆘 SOS: En caso de errores
 
-Si hiciste cambios por error en un archivo original y el botón **Pull**
-te da un error rojo:
+Si hiciste cambios por error en un archivo original y el botón **Pull** te da un error rojo:
 1. En la pestaña **Git**, haz clic derecho sobre el archivo problemático.
 2. Selecciona **Revert...**. (Esto borrará tus cambios locales en ese archivo y lo dejará como el original).
 3. Intenta el **Pull** de nuevo. 4. *Si nada funciona:* Borra la carpeta del curso en tu PC y vuelve a **Clonar** el proyecto. ¡Es la solución más rápida!
