@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 ¡Bienvenid\@ al repositorio oficial del Curso Introductorio de R! Aquí
 encontrarás todo el material, datos y scripts que utilizaremos en clase.
 El objetivo de usar GitHub es que siempre tengas la versión más reciente
@@ -54,7 +48,7 @@ Desktop** 3. **Git** ([Descárgalo aquí](https://git-scm.com/downloads))
 Para tener este proyecto en tu computadora, no descargues un ZIP. Sigue
 estos pasos en RStudio: 1. Ve a **File \> New Project \> Version Control
 \> Git**. 2. En **Repository URL**, pega este enlace:
-`https://github.com/Roberto-Carlos1983/Curso_Introductorio_R.git` 3. Elige la
+`https://github.com/Roberto-Carlos1983/Modulo1_Curso_R.git` 3. Elige la
 carpeta donde quieres guardarlo y haz clic en **Create Project**.
 
 ------------------------------------------------------------------------
