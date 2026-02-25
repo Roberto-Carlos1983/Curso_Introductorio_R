@@ -47,7 +47,7 @@ Antes de empezar, asegúrate de tener instalado:
 Para tener este proyecto en tu computadora, no descargues un ZIP. Sigue
 estos pasos en RStudio:
 1. Ve a **File \> New Project \> Version Control\> Git**.
-2. En **Repository URL**, pega este enlace: `https://github.com/Roberto-Carlos1983/Modulo1_Curso_R.git`
+2. En **Repository URL**, pega este enlace: `https://github.com/Roberto-Carlos1983/Curso_Introductorio_R.git`
 3. Elige la carpeta donde quieres guardarlo y haz clic en **Create Project**.
 
 ------------------------------------------------------------------------
