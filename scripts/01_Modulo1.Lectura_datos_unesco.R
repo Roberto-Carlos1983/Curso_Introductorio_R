@@ -3,7 +3,7 @@
 
 #Cargar librerias
 #Si no se tiene instalada previamente, correr la función
-#install.packages("")
+#install.packages("","")
 
 library(tidyverse)  #data wrangling
 library(httr)       #tools for working with URLs and HTTP
@@ -70,9 +70,9 @@ View(datos)
 #Exportar información en formato Excel----
 
 # 1. Crear el objeto con la información filtrada
-filtrado <- filter(datos,indicatorId="")
+filtrado <- filter(datos,indicatorId=="NERT.1.F.CP")
 #Si es más de un indicador, entonces correr el siguiente código (eliminar el signo numeral de la siguiente línea para quitar el comentario):
-#filtrado <- filter(datos,indicatorId %in% c("NERT.1.F.CP","NERT.1.M.CP") )
+filtrado <- filter(datos,indicatorId %in% c("NERT.1.F.CP","NERT.1.M.CP") )
 
 # 2. Definir donde se guardará la información. Se debe copiar la ruta donde se
 #exportará la información utilizando esta barra / al separador de carpetas
