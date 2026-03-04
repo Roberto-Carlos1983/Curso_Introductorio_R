@@ -15,7 +15,7 @@ summary(mtcars, digits=3)
 ?mtcars
 ?summary
 ?View
-seq(from = 2, to = 10, by = 2)
+seq(from = 2, to = 10, by = 2) # ctrl+enter
 seq(2,10,2)
 ?seq
 seq
@@ -36,7 +36,9 @@ library(help = "datasets")
 #Segundo ejemplo
 View(Titanic)
 ?Titanic
+#alt+-
 data_titanic <- data.frame(Titanic)
+
 dim(data_titanic)
 sum(data_titanic$Freq)
 aggregate(Freq ~ Sex+Survived, data = data_titanic, sum)
@@ -46,9 +48,12 @@ aggregate(Freq ~ Sex+Survived, data = data_titanic, sum)
 iris
 ?iris
 table(iris$Sepal.Width)
-table(iris$Sepal.Width, iris$Species)
+table(iris$Sepal.Width, iris$Species, iris$Petal.Length)
 args(table)
+
 data_iris <- data.frame(iris)
+library(tidyverse)
+
 data_iris |> 
   dplyr::group_by(Species,Sepal.Width) |> 
   dplyr::summarise(Ancho=dplyr::n()) |> 
@@ -59,7 +64,6 @@ datos <- c(1, 2, 2,10 ,5, 8,9,NA)
 table(datos)
 # Cambiando el valor por defecto
 table(datos, useNA = "ifany")
-
 mean(datos)
 args(mean)
 ?mean
@@ -94,6 +98,9 @@ y <- dplyr::tribble(
   "Veronica" , 15,
 )
 #[Fila, Columna]
+x[1,1]
+x[1,2]
+
 x[2,2]
 
 # =========================================================
@@ -110,6 +117,7 @@ x[2,2]
 
 install.packages("here")
 library(here)
+
 install.packages("tidyverse")
 library(tidyverse)
 
@@ -122,6 +130,7 @@ data_titanic |>
   slice(2)
 
 data_titanic[10:13,"Class"]
+
 data_titanic |> 
   slice(10:13) |> 
   select(Class)
@@ -131,10 +140,12 @@ data_titanic |>
 library(dplyr)
 ?mtcars
 table(mtcars$cyl)
+
 #Código base R
 resultado_base <- mtcars[mtcars$cyl > 6, ]
+
 #Código paquete dplyr
-resultado_tidy <- mtcars %>% 
+resultado_comparacion <- mtcars |>  
   filter(cyl > 6)
 
 #Tercer ejemplo
@@ -170,7 +181,7 @@ ggplot(mtcars, aes(x = wt, y = mpg, colour = factor(cyl), shape = factor(cyl))) 
 
 #Configuración con ruta extensa
 # Con setwd, usar doble \\ en cada lugar donde se ingrese a una nueva carpeta
-setwd("")
+setwd("C:/BK ROBERTO RODRIGUEZ/MINED/CENSO_2026-SIGES-OFICIAL")
 
 #Si no se trabaja por proyectos, file.choose() es util para ubicar la ruta en el computador
 #Se ejecuta file.choose() sin ningún argumento
