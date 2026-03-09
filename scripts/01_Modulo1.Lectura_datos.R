@@ -179,16 +179,17 @@ ggplot(mtcars, aes(x = wt, y = mpg, colour = factor(cyl), shape = factor(cyl))) 
 
 # 2. Configuración de rutas para lectura de archivos
 
-#Configuración con ruta extensa
-# Con setwd, usar doble \\ en cada lugar donde se ingrese a una nueva carpeta
-setwd("C:/BK ROBERTO RODRIGUEZ/MINED/CENSO_2026-SIGES-OFICIAL")
-
 #Si no se trabaja por proyectos, file.choose() es util para ubicar la ruta en el computador
 #Se ejecuta file.choose() sin ningún argumento
 
 file.choose()
 
 datos <- read_csv("copiar ruta")
+
+#Configuración con ruta extensa
+# Con setwd, usar doble \\ o / en cada lugar donde se ingrese a una nueva carpeta
+# \ no es usado de la misma forma que Windows
+setwd("C:/BK ROBERTO RODRIGUEZ/MINED/CENSO_2026-SIGES-OFICIAL")
 
 #Configuración con ruta relativa
 # Trabajando por proyectos, todo archivo guargado en la misma carpeta del proyecto
@@ -213,8 +214,6 @@ remesas <- readxl::read_xlsx("data/raw/Ingresos_mensuales_de_remesas_familiares.
 #Archivo Excel con here()
 
 library(here)
-here()
-setwd("C:\\BK ROBERTO RODRIGUEZ\\MINED\\CENSO_2026-SIGES-OFICIAL")
 remesas <- readxl::read_xlsx(here("data", "raw","Ingresos_mensuales_de_remesas_familiares.xlsx"))
 remesas_procesado <- remesas[3:4,]
 library(janitor)
@@ -223,6 +222,10 @@ remesas_procesado <- remesas_procesado |>
 
 colnames(remesas) <- remesas[3,]
 remesas_procesado <- remesas[-c(1,2,3,5),]
+
+#Por ejemplo, si posteriormente se cambia la ruta de conexión, la carga de librería here reconoce la ruta inicial
+setwd("C:\\BK ROBERTO RODRIGUEZ\\MINED\\CENSO_2026-SIGES-OFICIAL")
+remesas <- readxl::read_xlsx(here("data", "raw","Ingresos_mensuales_de_remesas_familiares.xlsx"))
 
 #Lectura de archivos en formato SPSS
 library(foreign)
