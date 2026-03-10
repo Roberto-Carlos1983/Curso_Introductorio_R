@@ -3,10 +3,35 @@
 # Propósito: Uso de funciones para el tratamiento de datos
 # =========================================================
 
+# 0. Uso del operador pipe |> (alt+shift+M)
+
+# Queremos: Limpiar nombres -> Filtrar -> Agrupar -> Resumir
+base_matricula <- read.csv("data/raw/Muestra2025.csv")
+names(base_matricula)
+unique(base_matricula$COD_DEPARTAMENTO_CE)
+
+#Todo con código base R
+resultado <- summarise(group_by(filter(clean_names(base_matricula), cod_departamento_ce == 1), distrito_ce), total = n())
+
+#Paso a paso con creación de múltiples data frames intermedios
+df1 <- clean_names(base_matricula)
+df2 <- filter(df1, cod_departamento_ce == 1)
+df3 <- group_by(df2, distrito_ce)
+resultado_rev <- summarise(df3, total = n())
+
+#Con la ayuda del operador pipe
+# Se lee: "Toma la base, LUEGO limpia, LUEGO filtra..."
+resultado_rev2 <- base_matricula |> 
+  clean_names() |> 
+  filter(cod_departamento_ce == 1) |> 
+  group_by(distrito_ce) |> 
+  summarise(total = n())
+
 # 1. Limpieza de nombres
 
 #Primer ejemplo
 
+library(tidyverse)
 library(janitor)
 library(here)
 
@@ -16,10 +41,10 @@ unique(gira_musical$`All Time Peak`)
 gira_musical_rev <- clean_names(gira_musical)
 names(gira_musical_rev)
 
-names(gira_musical)[names(gira_musical)=="Adjusted gross (in 2022 dollars)"] <- "Adjusted gross (in $)"
-names(gira_musical)=="Adjusted gross (in 2022 dollars)"
-stringi::stri_escape_unicode(names(gira_musical))
-names(gira_musical)[names(gira_musical)=="Adjusted\u00a0gross (in 2022 dollars)"] <- "Adjusted gross (in $)"
+#names(gira_musical)[names(gira_musical)=="Adjusted gross (in 2022 dollars)"] <- "Adjusted gross (in $)"
+#names(gira_musical)=="Adjusted gross (in 2022 dollars)"
+#stringi::stri_escape_unicode(names(gira_musical))
+#names(gira_musical)[names(gira_musical)=="Adjusted\u00a0gross (in 2022 dollars)"] <- "Adjusted gross (in $)"
 
 #Segundo ejemplo
 library(tidyverse)
