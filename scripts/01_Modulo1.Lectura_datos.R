@@ -190,6 +190,7 @@ datos <- read_csv("copiar ruta")
 # Con setwd, usar doble \\ o / en cada lugar donde se ingrese a una nueva carpeta
 # \ no es usado de la misma forma que Windows
 setwd("C:/BK ROBERTO RODRIGUEZ/MINED/CENSO_2026-SIGES-OFICIAL")
+setwd("C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R")
 
 #Configuración con ruta relativa
 # Trabajando por proyectos, todo archivo guargado en la misma carpeta del proyecto
@@ -201,15 +202,33 @@ read.csv("dataset/ultimos/base_datos.csv")
 # 3. Lectura de datos
 
 #Lectura de archivos en formato CSV
+library(tidyverse)
+
+file.choose()
+#alt+-
+
+base_matricula <- read.csv(file = "C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R\\data\\raw\\Muestra2025.csv",header = TRUE)
+rm(base_matricula)
+
+base_matricula <- read.csv("data/raw/Muestra2025.csv")
+base_matricula <- read_csv()
+
 read.csv()
 file.choose()
 matricula <- read.csv()
 
 #Lectura de archivos en formato Excel
+install.packages("readxl")
 library(readxl)
+
+base <- read_xlsx("CAUSAS DE RETIRO_FINAL 2015_ARCHIVO DE TRABAJO.xlsx")
+
 read_xlsx()
 readxl::read_xlsx()
+
 remesas <- readxl::read_xlsx("data/raw/Ingresos_mensuales_de_remesas_familiares.xlsx")
+
+remesas_base <- readxl::read_excel()
 
 #Archivo Excel con here()
 
@@ -225,16 +244,19 @@ remesas_procesado <- remesas[-c(1,2,3,5),]
 
 #Por ejemplo, si posteriormente se cambia la ruta de conexión, la carga de librería here reconoce la ruta inicial
 setwd("C:\\BK ROBERTO RODRIGUEZ\\MINED\\CENSO_2026-SIGES-OFICIAL")
+setwd("C:/BK ROBERTO RODRIGUEZ/MINED/Capacitación_R/Curso_Introductorio_R")
 remesas <- readxl::read_xlsx(here("data", "raw","Ingresos_mensuales_de_remesas_familiares.xlsx"))
 
 #Lectura de archivos en formato SPSS
+install.packages("foreign")
 library(foreign)
 read.spss()
 foreign::read.spss()
-ehpm2024 <- read.spss("data/raw/EHPM 2024.sav")
+ehpm2024 <- read.spss("data/raw/EHPM 2024.sav",use.value.labels = FALSE,to.data.frame = TRUE)
 
 library(haven)
 haven::read_stata()
+
 ehpm2024 <- read_sav("data/raw/EHPM 2024.sav")
 class(ehpm2024$r107)
 table(ehpm2024$r107)
