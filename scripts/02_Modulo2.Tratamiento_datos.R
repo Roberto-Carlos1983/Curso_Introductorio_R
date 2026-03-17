@@ -5,7 +5,7 @@
 
 # 0. Uso del operador pipe |> (alt+shift+M)
 
-# Queremos: Limpiar nombres -> Filtrar -> Agrupar -> Resumir
+# Limpiar nombres -> Filtrar -> Agrupar -> Resumir
 base_matricula <- read.csv("data/raw/Muestra2025.csv")
 names(base_matricula)
 unique(base_matricula$COD_DEPARTAMENTO_CE)
@@ -54,8 +54,7 @@ library(janitor)
 datos_sucios <- tribble(
   ~"Nombre Completo", ~"Año/2023", ~"Ingreso ($)", ~"¿Tiene Hijos?",
   "Juan Pérez",        2023,       1200,          "Sí",
-  "Ana López",         2023,       1500,          "No"
-)
+  "Ana López",         2023,       1500,          "No")
 
 names(datos_sucios)
 

@@ -295,7 +295,7 @@ summary(carros)
 library(foreign)
 ehpm2024 <- read.spss("data/raw/EHPM 2024.sav")
 ehpm2024 <- data.frame(read.spss("data/raw/EHPM 2024.sav"))
-ehpm2024 <- read.spss("data/raw/EHPM 2024.sav",use.value.labels = ,to.data.frame = )
+ehpm2024 <- read.spss("data/raw/EHPM 2024.sav",use.value.labels = FALSE,to.data.frame = TRUE)
 glimpse(ehpm2024)
 glimpse(ehpm2024[,c("r106","r107")])
 str(ehpm2024)
@@ -325,7 +325,10 @@ df <- msleep
 glimpse(df)
 
 #Cuarto ejemplo
+library(here)
 netflix <- read.csv(here("data/raw/netflix_titles.csv"))
+View(netflix)
 glimpse(netflix)
 
-ultimo
+
+
