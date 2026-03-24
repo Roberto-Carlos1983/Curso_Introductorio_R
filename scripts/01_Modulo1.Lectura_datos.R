@@ -276,26 +276,43 @@ tablas <- html_table(pagina)
 tablas
 remesas_web <- tablas[[3]]
 
+file.choose()
+
+#alt+-
+
+muestra2025 <- read.csv("data\\raw\\Muestra2025.csv")
+
 # 4. Exploración inicial ----
 
 #Primer ejemplo
+
 carros <- data.frame(mtcars)
 
-head(carros,10)   # Ver las primeras n filas
-tail(carros)      # Ver las primeras 6 filas
+head(carros,10)     # Ver las primeras n filas
+tail(carros,10)      # Ver las primeras 6 filas
 
+install.packages("tidyverse")
 library(tidyverse)
+
+names(carros)
 glimpse(carros) # Ver estructura de columnas y tipos de datos
 str(carros)
-class(carros$mpg)
+
+class(carros$hp)
 class(carros$gear)
+
 summary(carros)
 
 #Segundo ejemplo
 library(foreign)
+file.choose()
+
+ehpm2024 <- read.spss("C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R\\data\\raw\\EHPM 2024.sav",to.data.frame = TRUE,use.value.labels = TRUE)
+
 ehpm2024 <- read.spss("data/raw/EHPM 2024.sav")
 ehpm2024 <- data.frame(read.spss("data/raw/EHPM 2024.sav"))
 ehpm2024 <- read.spss("data/raw/EHPM 2024.sav",use.value.labels = FALSE,to.data.frame = TRUE)
+
 glimpse(ehpm2024)
 glimpse(ehpm2024[,c("r106","r107")])
 str(ehpm2024)
@@ -306,6 +323,7 @@ ehpm2024 <- read_sav("data/raw/EHPM 2024.sav")
 class(ehpm2024$r107)
 table(ehpm2024$r107)
 
+install.packages("labelled")
 library(labelled)
 var_label(ehpm2024$r107)
 val_labels(ehpm2024$r107)
@@ -313,7 +331,10 @@ print_labels(ehpm2024$r107)
 
 #Buscar variables de análisis
 library(labelled)
-busqueda <- look_for(ehpm2024, "subempleo")
+look_for(ehpm2024,c("ingreso","remesa"))
+
+busqueda <- look_for(ehpm2024,c("ingreso","remesa"))
+View(busqueda)
 busqueda <- look_for(ehpm2024, c("ingreso","subempleo"))
 print(busqueda)
 
@@ -326,6 +347,7 @@ glimpse(df)
 
 #Cuarto ejemplo
 library(here)
+
 netflix <- read.csv(here("data/raw/netflix_titles.csv"))
 View(netflix)
 glimpse(netflix)

@@ -11,9 +11,16 @@ names(base_matricula)
 unique(base_matricula$COD_DEPARTAMENTO_CE)
 
 #Todo con código base R
+library(janitor)
+base_matricula <- clean_names(base_matricula)
+base_matricula <- filter(base_matricula,cod_departamento_ce == 1)
+
+prueba <- filter(clean_names(base_matricula),cod_departamento_ce == 1)
+
 resultado <- summarise(group_by(filter(clean_names(base_matricula), cod_departamento_ce == 1), distrito_ce), total = n())
 
 #Paso a paso con creación de múltiples data frames intermedios
+
 df1 <- clean_names(base_matricula)
 df2 <- filter(df1, cod_departamento_ce == 1)
 df3 <- group_by(df2, distrito_ce)
@@ -21,7 +28,9 @@ resultado_rev <- summarise(df3, total = n())
 
 #Con la ayuda del operador pipe
 # Se lee: "Toma la base, LUEGO limpia, LUEGO filtra..."
-resultado_rev2 <- base_matricula |> 
+#ctrl+shift+M
+  
+objeto_pipe <- base_matricula |>
   clean_names() |> 
   filter(cod_departamento_ce == 1) |> 
   group_by(distrito_ce) |> 
@@ -61,6 +70,8 @@ names(datos_sucios)
 datos_limpios <- datos_sucios |> 
   clean_names()
 
+datos_limpios2 <- clean_names(datos_sucios)
+
 names(datos_limpios)
 
 # Tercer ejemplo
@@ -99,8 +110,8 @@ ggplot2::ggplot(triangulo_norte,aes(x = lifeExp,y = gdpPercap))+
   facet_wrap(~country,scales="free_y")
 
 #Segundo ejemplo
+#Ingresos altos
 
-ingresos_altos
 summary(datos$gdpPercap)
 unique(datos$year)
 
@@ -115,6 +126,11 @@ ggplot2::ggplot(ingresos_altos,aes(x = lifeExp,y = gdpPercap))+
 #Tercer ejemplo
 
 no_asia <- filter(datos,continent!="Asia")
+
+#Cuarto ejemplo
+
+base <- matricula |> 
+  filter(str_detect(nombre_ce, "Complejo"))
 
 
 
