@@ -132,6 +132,9 @@ no_asia <- filter(datos,continent!="Asia")
 base <- matricula |> 
   filter(str_detect(nombre_ce, "Complejo"))
 
+base |> 
+  filter(str_detect(nombre_ce, regex("complejo", ignore_case = TRUE)))
+
 
 
 
