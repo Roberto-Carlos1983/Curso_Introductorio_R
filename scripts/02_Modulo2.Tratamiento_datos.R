@@ -29,11 +29,12 @@ resultado_rev <- summarise(df3, total = n())
 #Con la ayuda del operador pipe
 # Se lee: "Toma la base, LUEGO limpia, LUEGO filtra..."
 #ctrl+shift+M
-  
-objeto_pipe <- base_matricula |>
-  clean_names() |> 
-  filter(cod_departamento_ce == 1) |> 
-  group_by(distrito_ce) |> 
+library(tidyverse)
+
+objeto_pipe <- base_matricula %>%
+  clean_names() %>%
+  filter(cod_departamento_ce == 1) %>%
+  group_by(distrito_ce) %>%
   summarise(total = n())
 
 # 1. Limpieza de nombres
@@ -44,9 +45,12 @@ library(tidyverse)
 library(janitor)
 library(here)
 
-gira_musical <- read_csv(here("data/raw/my_file (1).csv"))
+gira_musical <- read_csv("data/raw/my_file (1).csv")
+View(gira_musical)
+#ctrl+L
 names(gira_musical)
-unique(gira_musical$`All Time Peak`)
+unique(gira_musical$`Tour title`)
+
 gira_musical_rev <- clean_names(gira_musical)
 names(gira_musical_rev)
 
@@ -72,11 +76,21 @@ datos_limpios <- datos_sucios |>
 
 datos_limpios2 <- clean_names(datos_sucios)
 
-names(datos_limpios)
+names(datos_limpios2)
 
 # Tercer ejemplo
-
+file.choose()
+remesas <- readxl::read_xlsx("C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R\\data\\raw\\Ingresos_mensuales_de_remesas_familiares.xlsx")
 remesas <- readxl::read_xlsx(here("data", "raw","Ingresos_mensuales_de_remesas_familiares.xlsx"))
+
+names(remesas)
+
+remesas_limpio <- remesas |> 
+  row_to_names(row_number = 3) |> 
+  remove_empty(which = c("rows")) |> 
+  clean_names()
+
+remesas_limpio2 <- remesas_limpio[1,]
 
 remesasadiciona <- data.frame(t(rep(NA,14)))
 
@@ -99,10 +113,20 @@ install.packages("gapminder")
 library(gapminder)
 
 datos <- gapminder_unfiltered
+View(datos)
 glimpse(datos)
 unique(datos$country)
+library(tidyverse)
+
+dplyr::filter()
 
 el_salvador <- filter(datos,country=="El Salvador")
+
+el_salvador2 <- datos |> 
+  filter(country=="El Salvador")
+
+prueba <- filter(datos,country=="El Salvador" | country=="Guatemala" | country=="Honduras")
+
 triangulo_norte <- filter(datos,country %in% c("El Salvador","Guatemala","Honduras"))
 
 ggplot2::ggplot(triangulo_norte,aes(x = lifeExp,y = gdpPercap))+
