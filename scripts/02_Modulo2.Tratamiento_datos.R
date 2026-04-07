@@ -152,14 +152,90 @@ ggplot2::ggplot(ingresos_altos,aes(x = lifeExp,y = gdpPercap))+
 no_asia <- filter(datos,continent!="Asia")
 
 #Cuarto ejemplo
+library(tidyverse)
+library(here)
 
-base <- matricula |> 
-  filter(str_detect(nombre_ce, "Complejo"))
+centros_educativos <- readxl::read_xlsx("data/raw/Centros_educativos.xlsx")
+str_detect(centros_educativos$NOMBRE_CE,"COMPLEJO")
+str_detect(centros_educativos$NOMBRE_CE,regex("COMPLEJO",ignore_case = TRUE))
 
-base |> 
-  filter(str_detect(nombre_ce, regex("complejo", ignore_case = TRUE)))
+filtrado <- centros_educativos |> 
+  filter(str_detect(NOMBRE_CE, regex("milagro",ignore_case = TRUE)))
 
+filtrado <- centros_educativos |> 
+  filter(str_detect(NOMBRE_CE,"[0-9]"))
 
+library(stringi)
+
+filtrado <- centros_educativos |> 
+  filter(str_detect(stri_trans_general(NOMBRE_CE,id = "Latin-ASCII"), regex("canton",ignore_case = TRUE)))
+
+filtrado <- centros_educativos |> 
+  filter(str_detect(str_to_lower(stri_trans_general(NOMBRE_CE, id = "Latin-ASCII")), "canton"))
+
+# 2. Seleccionar columnas (variables)
+
+# Primer ejemplo: selección por nombre
+
+matricula <- read.csv("data/raw/Muestra2025.csv")
+
+niveles_sexo <- matricula |> 
+  select(NIVEL_EDUCATIVO,SEXO)
+View(san_salvador)
+
+# Segundo ejemplo: selección por rango
+
+relevantes <- matricula |> 
+  select(CICLO:SEXO)
+
+# Tercer ejemplo: quitar columnas
+
+analisis <- matricula |> 
+  select(-c(AÑO,GRADO))
+
+# Cuarto ejemplo: para ordenar las variables
+
+analisis <- matricula |> 
+  select(DISTRITO_CE,everything())
+
+# Quinto ejemplo: seleccionar solo columnas de un tipo
+
+numerico <- matricula |> 
+  select(where(is.numeric))
+
+texto <- matricula |> 
+  select(where(is.character))
+
+# Sexto ejemplo: nombres de variables con algun patrón
+file.choose()
+
+library(haven)
+ehpm2024 <- haven::read_sav("C:\\BK ROBERTO RODRIGUEZ\\MINED\\EHPM\\Base de datos EHPM 2024 con área geográfica.sav")
+
+var_relevantes <- ehpm2024 |> 
+  select(starts_with("r2"))
+
+# 3. Crear nuevas columnas o sobrescribir (variables)
+
+# Primer ejemplo: crear nueva variable
+
+#ingresos_ehpm
+
+# Segundo ejemplo: sobrescribir
+
+#llevar a minuscula una variable o quitar acentos
+
+# Tercer ejemplo: uso de if_else o case_when
+
+#Crear regiones a partir de los departamentos
+
+# Cuarto ejemplo: uso de .after y .before
+
+#Crear una variable y moverla a un lugar en específico
+
+  
+  
+  
 
 
 
