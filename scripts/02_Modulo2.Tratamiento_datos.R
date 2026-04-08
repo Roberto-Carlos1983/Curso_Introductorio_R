@@ -154,10 +154,20 @@ no_asia <- filter(datos,continent!="Asia")
 #Cuarto ejemplo
 library(tidyverse)
 library(here)
+file.choose()
 
 centros_educativos <- readxl::read_xlsx("data/raw/Centros_educativos.xlsx")
+
+centros_educativos <- readxl::read_xlsx("C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R\\data\\raw\\Centros_educativos.xlsx")
+
+str_detect("ROBERTO 12","roberto")
+
 str_detect(centros_educativos$NOMBRE_CE,"COMPLEJO")
-str_detect(centros_educativos$NOMBRE_CE,regex("COMPLEJO",ignore_case = TRUE))
+
+centros_filtrados <- filter(centros_educativos,str_detect(NOMBRE_CE,"COMPLEJO"))
+
+str_detect(centros_educativos$NOMBRE_CE,regex("complejo",ignore_case = TRUE))
+#ctrl+shift+M |> 
 
 filtrado <- centros_educativos |> 
   filter(str_detect(NOMBRE_CE, regex("milagro",ignore_case = TRUE)))
@@ -165,9 +175,13 @@ filtrado <- centros_educativos |>
 filtrado <- centros_educativos |> 
   filter(str_detect(NOMBRE_CE,"[0-9]"))
 
+install.packages("stringi")
 library(stringi)
+stri_trans_general(centros_educativos$NOMBRE_CE,id = "Latin-ASCII")
 
-filtrado <- centros_educativos |> 
+str_detect(stri_trans_general(NOMBRE_CE,id = "Latin-ASCII"),"CANTON")
+
+filtrado_rev <- centros_educativos |> 
   filter(str_detect(stri_trans_general(NOMBRE_CE,id = "Latin-ASCII"), regex("canton",ignore_case = TRUE)))
 
 filtrado <- centros_educativos |> 
@@ -176,12 +190,11 @@ filtrado <- centros_educativos |>
 # 2. Seleccionar columnas (variables)
 
 # Primer ejemplo: selección por nombre
-
+file.choose()
 matricula <- read.csv("data/raw/Muestra2025.csv")
 
 niveles_sexo <- matricula |> 
   select(NIVEL_EDUCATIVO,SEXO)
-View(san_salvador)
 
 # Segundo ejemplo: selección por rango
 
@@ -193,12 +206,15 @@ relevantes <- matricula |>
 analisis <- matricula |> 
   select(-c(AÑO,GRADO))
 
+select(-c(AÑO,GRADO))
+
 # Cuarto ejemplo: para ordenar las variables
 
-analisis <- matricula |> 
+analisis_rev <- matricula |> 
   select(DISTRITO_CE,everything())
 
 # Quinto ejemplo: seleccionar solo columnas de un tipo
+glimpse(matricula)
 
 numerico <- matricula |> 
   select(where(is.numeric))
@@ -208,22 +224,40 @@ texto <- matricula |>
 
 # Sexto ejemplo: nombres de variables con algun patrón
 file.choose()
-
 library(haven)
+
 ehpm2024 <- haven::read_sav("C:\\BK ROBERTO RODRIGUEZ\\MINED\\EHPM\\Base de datos EHPM 2024 con área geográfica.sav")
 
 var_relevantes <- ehpm2024 |> 
   select(starts_with("r2"))
 
 # 3. Crear nuevas columnas o sobrescribir (variables)
+mutate()
 
 # Primer ejemplo: crear nueva variable
+library(labelled)
 
 #ingresos_ehpm
+busqueda <- look_for(ehpm2024,"ingreso")
+
+ejemplo_ingreso <- ehpm2024 |> 
+  select(ingreso_independientes,ingreso_agro,ingreso_pensiones,ingreso_remesas) |> 
+  mutate(ingreso_independientes=if_else(is.na(ingreso_independientes),0,ingreso_independientes),
+         ingreso_agro=if_else(is.na(ingreso_agro),0,ingreso_agro),
+         ingreso_pensiones=if_else(is.na(ingreso_pensiones),0,ingreso_pensiones),
+         ingreso_remesas=if_else(is.na(ingreso_remesas),0,ingreso_remesas),
+         TOTAL_INGRESOS=ingreso_independientes+ingreso_agro+ingreso_pensiones+ingreso_remesas)
 
 # Segundo ejemplo: sobrescribir
-
 #llevar a minuscula una variable o quitar acentos
+
+centros_minusculas <- centros_educativos |> 
+  select(CÓDIGO_CE,NOMBRE_CE) |> 
+  mutate(NOMBRE_minuscula=tolower(NOMBRE_CE),
+         NOMBRE_mayuscula=toupper(NOMBRE_CE),
+         NOMBRE_CE_corregida=stri_trans_general(NOMBRE_CE,id = "Latin-ASCII"),
+         NOMBRE_CE=stri_trans_general(NOMBRE_CE,id = "Latin-ASCII")) |> 
+  filter(str_detect(NOMBRE_CE_corregida,"CANTON"))
 
 # Tercer ejemplo: uso de if_else o case_when
 
