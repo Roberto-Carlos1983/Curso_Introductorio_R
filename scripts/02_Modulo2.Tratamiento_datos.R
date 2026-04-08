@@ -248,6 +248,12 @@ ejemplo_ingreso <- ehpm2024 |>
          ingreso_remesas=if_else(is.na(ingreso_remesas),0,ingreso_remesas),
          TOTAL_INGRESOS=ingreso_independientes+ingreso_agro+ingreso_pensiones+ingreso_remesas)
 
+library(dplyr)
+
+df <- ehpm2024 |> 
+  select(ingreso_independientes,ingreso_agro,ingreso_pensiones,ingreso_remesas) |> 
+  mutate(TOTAL_INGRESOS = rowSums(pick(ingreso_independientes, ingreso_agro, ingreso_pensiones, ingreso_remesas), na.rm = TRUE))
+
 # Segundo ejemplo: sobrescribir
 #llevar a minuscula una variable o quitar acentos
 
