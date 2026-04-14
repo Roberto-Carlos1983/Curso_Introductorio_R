@@ -273,6 +273,57 @@ centros_minusculas <- centros_educativos |>
 
 #Crear una variable y moverla a un lugar en específico
 
+# 4. Limpiar nombres, filtrar, seleccionar y crear
+# Primer ejemplo: Base de datos de casas
+
+install.packages("AmesHousing")
+library(AmesHousing)
+?ames_raw
+library(janitor)
+library(stringi)
+library(tidyverse)
+
+# Cargar los datos brutos
+ames_raw <- data.frame(ames_raw)
+glimpse(ames_raw)
+unique(ames_raw$Neighborhood)
+unique(ames_limpia$year_built)
+unique(ames_limpia$yr_sold)
+unique(ames_limpia$neighborhood)
+
+ames_limpia <- ames_raw |> 
+  # Estandarizar nombres
+  clean_names() |> 
+  
+  # Limpiar el texto en la columna de vecindarios
+  mutate(neighborhood = stri_trans_general(neighborhood, "Latin-ASCII"),
+         neighborhood = str_to_title(str_trim(neighborhood))) |> 
+  
+  # Filtrar casas en vecindarios cercanos a la universidad
+  # Buscamos College Creek
+  filter(str_detect(neighborhood, "Collgcr")) |> 
+  
+  # Crear variables nuevas
+  mutate(total_metros=(x1st_flr_sf+x2nd_flr_sf)*0.092903,
+         precio_m2 = sale_price / total_metros,
+         antiguedad = yr_sold - year_built,
+         es_nueva = if_else(antiguedad <= 5, "Sí", "No")  ) |> 
+  
+  # Seleccionar y organizar
+  select(neighborhood, sale_price, precio_m2, antiguedad, es_nueva, everything()) |> 
+  relocate(sale_price, .after = neighborhood)
+
+# Ver el resultado
+View(ames_limpia)
+
+# Segundo ejemplo: base de diamantes
+
+library(tidyverse)
+?diamonds
+diamonds
+
+
+
   
   
   
