@@ -227,6 +227,7 @@ file.choose()
 library(haven)
 
 ehpm2024 <- haven::read_sav("C:\\BK ROBERTO RODRIGUEZ\\MINED\\EHPM\\Base de datos EHPM 2024 con área geográfica.sav")
+ehpm2024 <- haven::read_sav("data/raw/Base de datos EHPM 2024 con área geográfica.sav")
 
 var_relevantes <- ehpm2024 |> 
   select(starts_with("r2"))
@@ -236,6 +237,7 @@ mutate()
 
 # Primer ejemplo: crear nueva variable
 library(labelled)
+library(tidyverse)
 
 #ingresos_ehpm
 busqueda <- look_for(ehpm2024,"ingreso")
@@ -250,9 +252,10 @@ ejemplo_ingreso <- ehpm2024 |>
 
 library(dplyr)
 
-df <- ehpm2024 |> 
+ejemplo_ingresos_rev <- ehpm2024 |> 
   select(ingreso_independientes,ingreso_agro,ingreso_pensiones,ingreso_remesas) |> 
   mutate(TOTAL_INGRESOS = rowSums(pick(ingreso_independientes, ingreso_agro, ingreso_pensiones, ingreso_remesas), na.rm = TRUE))
+rowSums(objeto,na.rm = TRUE)
 
 # Segundo ejemplo: sobrescribir
 #llevar a minuscula una variable o quitar acentos
@@ -266,10 +269,45 @@ centros_minusculas <- centros_educativos |>
   filter(str_detect(NOMBRE_CE_corregida,"CANTON"))
 
 # Tercer ejemplo: uso de if_else o case_when
+val_labels(ehpm2024$area)
+
+
+regiones <- ehpm2024 |> 
+  select(r004) |> 
+  mutate(Region=case_when(r004 %in% c(1,2,3,4) ~ "Occidente",
+                          r004==5 | r004==6 | r004==7 | r004==8 ~ "Centro_1",
+                          r004==9 | r004==10 | r004==11 | r004==12 ~ "Centro_2",
+                          r004==13 | r004==14 ~ "Oriente"))
+
+regiones_rev <- ehpm2024 |> 
+  select(r004,area) |> 
+  mutate(Region=case_when(r004 %in% c(1,2,3,4) & area==1 ~ "Occidente_urbano",
+                          r004==5 | r004==6 | r004==7 | r004==8 ~ "Centro_1",
+                          r004==9 | r004==10 | r004==11 | r004==12 ~ "Centro_2",
+                          TRUE ~ "Oriente"))
+regiones |> 
+  distinct(r004,Region)
 
 #Crear regiones a partir de los departamentos
 
 # Cuarto ejemplo: uso de .after y .before
+
+ejemplo_ingreso <- ehpm2024 |> 
+  select(ingreso_independientes,ingreso_agro,ingreso_pensiones,ingreso_remesas) |> 
+  mutate(ingreso_independientes=if_else(is.na(ingreso_independientes),0,ingreso_independientes),
+         ingreso_agro=if_else(is.na(ingreso_agro),0,ingreso_agro),
+         ingreso_pensiones=if_else(is.na(ingreso_pensiones),0,ingreso_pensiones),
+         ingreso_remesas=if_else(is.na(ingreso_remesas),0,ingreso_remesas),
+         TOTAL_INGRESOS=ingreso_independientes+ingreso_agro+ingreso_pensiones+ingreso_remesas,.before = ingreso_independientes)
+
+ejemplo_ingreso <- ehpm2024 |> 
+  select(ingreso_independientes,ingreso_agro,ingreso_pensiones,ingreso_remesas) |> 
+  mutate(ingreso_independientes=if_else(is.na(ingreso_independientes),0,ingreso_independientes),
+         ingreso_agro=if_else(is.na(ingreso_agro),0,ingreso_agro),
+         ingreso_pensiones=if_else(is.na(ingreso_pensiones),0,ingreso_pensiones),
+         ingreso_remesas=if_else(is.na(ingreso_remesas),0,ingreso_remesas),
+         TOTAL_INGRESOS=ingreso_independientes+ingreso_agro+ingreso_pensiones+ingreso_remesas) |> 
+  select(TOTAL_INGRESOS,everything())
 
 #Crear una variable y moverla a un lugar en específico
 
@@ -284,34 +322,36 @@ library(stringi)
 library(tidyverse)
 
 # Cargar los datos brutos
+
 ames_raw <- data.frame(ames_raw)
+
 glimpse(ames_raw)
 unique(ames_raw$Neighborhood)
+unique(ames_raw$SalePrice)
 unique(ames_limpia$year_built)
 unique(ames_limpia$yr_sold)
 unique(ames_limpia$neighborhood)
 
 ames_limpia <- ames_raw |> 
-  # Estandarizar nombres
+  # Limpieza de nombres
   clean_names() |> 
   
   # Limpiar el texto en la columna de vecindarios
-  mutate(neighborhood = stri_trans_general(neighborhood, "Latin-ASCII"),
-         neighborhood = str_to_title(str_trim(neighborhood))) |> 
+  mutate(neighborhood = str_trim(neighborhood)) |> 
   
   # Filtrar casas en vecindarios cercanos a la universidad
   # Buscamos College Creek
-  filter(str_detect(neighborhood, "Collgcr")) |> 
+  filter(str_detect(neighborhood, "Coll")) |> 
   
   # Crear variables nuevas
   mutate(total_metros=(x1st_flr_sf+x2nd_flr_sf)*0.092903,
          precio_m2 = sale_price / total_metros,
          antiguedad = yr_sold - year_built,
-         es_nueva = if_else(antiguedad <= 5, "Sí", "No")  ) |> 
+         es_nueva = if_else(antiguedad <= 5, "Sí", "No")) |> 
   
   # Seleccionar y organizar
   select(neighborhood, sale_price, precio_m2, antiguedad, es_nueva, everything()) |> 
-  relocate(sale_price, .after = neighborhood)
+  relocate(sale_price, .after = es_nueva)
 
 # Ver el resultado
 View(ames_limpia)
@@ -320,8 +360,40 @@ View(ames_limpia)
 
 library(tidyverse)
 ?diamonds
-diamonds
 
+diamantes <- data.frame(diamonds)
+glimpse(diamantes)
+unique(diamantes$cut)
+
+diamantes |> 
+  count(cut)
+13791+21551
+
+diamantes_buenos <- diamantes |> 
+  filter(cut %in% c("Premium","Ideal","Good")) |> 
+  group_by(cut) |> 
+  summarise(Precio_promedio=mean(price),
+            Largo_promedio=median(x),
+            Número_diamante=n()) |> 
+  select(Número_diamante,everything())
+
+diamantes_buenos_color <- diamantes |> 
+  filter(cut %in% c("Premium","Ideal","Good")) |> 
+  group_by(cut,color) |> 
+  summarise(Precio_promedio=mean(price),
+            Largo_promedio=median(x),
+            Número_diamante=n()) |> 
+  select(Número_diamante,everything())
+
+muestra_departamento <- ehpm2024 |> 
+  group_by(r004,area) |> 
+  summarise(Conteo=n())
+
+left_join()
+semi_join()
+  
+
+  
 
 
   
