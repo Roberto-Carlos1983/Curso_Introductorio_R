@@ -102,10 +102,10 @@ ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
 
 ## 6. Referencias
 
-- Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2e). **R for Data Science**.
-- Crawley, M. (2007). **The R Book**.
-- Paradis, E. (2005). **R for Beginners**.
-- <https://atelierdecodigo.com/posts/libros-aprender-ciencia-datos.html>
+-   Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2e). **R for Data Science**.
+-   Crawley, M. (2007). **The R Book**.
+-   Paradis, E. (2005). **R for Beginners**.
+-   <https://atelierdecodigo.com/posts/libros-aprender-ciencia-datos.html>
 
 ## 7. Descarga de R y RStudio
 
@@ -118,3 +118,38 @@ Los sitios de descarga son:
 ## 8. Conociendo el panel de RStudio
 
 <https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html>
+
+## 9. Trabajando con fechas
+
+### Comparativa de Formatos de Fecha
+
+| Formato | Cómo se ve en R (`class`) | Valor real "bajo el capó" | ¿Se puede operar? |
+|:---|:--:|:--:|:--:|
+| **Character** | `<chr>` | `"2024-04-21"` (Texto) | No (Es solo dibujo) |
+| **Date** | `<date>` | `19834` (Días desde 1970) | **Sí** (Aritmética de días) |
+| **POSIXct** | `<dttm>` | `1713700800` (Segundos) | **Sí** (Incluye horas) |
+| **Integer** | `<int>` | `20240421` (Número) | **No** (Peligro de error) |
+
+: Tipos de almacenamiento de fechas en R {#tbl-fechas}
+
+-   La ilusión óptica de R: Señala que ver "2024-01-01" en la consola no garantiza que sea una fecha. Insiste en que siempre deben mirar la etiqueta debajo del nombre de la columna (<chr> vs <date>).
+
+-   ¿Por qué importa el formato Date?: \* Ordenamiento: Si es texto, "10-Ene" irá antes que "02-Ene" (orden alfabético). Si es fecha, R entiende la cronología.
+
+Cálculos: Solo en formato <date> puedes hacer operaciones como fecha_fin - fecha_inicio.
+
+-   El peligro del formato Integer (20240531): \* Explícales que si a ese "número" le suman 1, R les dará 20240532, lo cual destruye la integridad de los datos porque esa fecha no existe. Siempre hay que pasar por char y luego a Date.
+
+-   El origen de los tiempos (Unix Epoch): Como dato curioso (y útil para entender errores), diles que para R el "tiempo empezó" el 1 de enero de 1970. Si ven un 0 en un formato de fecha convertido a número, es ese día.
+
+## Errores Comunes al trabajar con Fechas ⚠️
+
+-   **Confundir el formato visual con el tipo de dato:** Creer que porque dice "2024-01-01" ya es una fecha (recordar siempre verificar el `<chr>` vs `<date>`).
+
+-   **Ignorar el orden de la función `lubridate`:** Usar `ymd()` cuando la fecha viene como "31-12-2024" (Día-Mes-Año). R devolverá `NA`.
+
+-   **Intentar aritmética con formatos Texto o Integer:** Hacer `20240531 + 1` y obtener `20240532` (una fecha inexistente).
+
+-   **No gestionar los NA tras la conversión:** Si una fecha está mal escrita (ej. "30-Feb"), `lubridate` la convertirá en `NA`. Si no revisas, perderás datos en tus cálculos.
+
+-   **Cargar archivos de Excel con fechas numéricas:** Excel cuenta los días desde 1900 y R desde 1970. Si no se especifica el "origin", las fechas saldrán con 70 años de error.

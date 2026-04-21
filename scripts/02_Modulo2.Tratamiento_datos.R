@@ -1,5 +1,5 @@
 # =========================================================
-# Título: Sesión 1 - Manipulación de información
+# Título: Sesión 2 - Manipulación de información
 # Propósito: Uso de funciones para el tratamiento de datos
 # =========================================================
 
@@ -385,19 +385,146 @@ diamantes_buenos_color <- diamantes |>
             Número_diamante=n()) |> 
   select(Número_diamante,everything())
 
-muestra_departamento <- ehpm2024 |> 
-  group_by(r004,area) |> 
-  summarise(Conteo=n())
+# 5. Ejemplos del group_by
 
-left_join()
-semi_join()
-  
+# Primer ejmeplo: Suma de casos por departamento
 
-  
+base_matricula <- read.csv("data/raw/Muestra2025.csv")
+
+datos_depto <- base_matricula |> 
+  group_by(DEPARTAMENTO_CE) |> 
+  summarise(Dato=n())
+View(datos_depto)
+
+datos_depto_distrito <- base_matricula |> 
+  group_by(DEPARTAMENTO_CE,DISTRITO_CE) |> 
+  summarise(Dato=n()) |> 
+  mutate(Total_depto=sum(Dato))
+View(datos_depto_distrito)
+
+datos_depto_distrito <- base_matricula |> 
+  group_by(DEPARTAMENTO_CE,DISTRITO_CE) |> 
+  summarise(Dato=n(),.groups = "keep") |>  #Incorporamos .groups= = "keep" 
+  mutate(Total_depto=sum(Dato))
+View(datos_depto_distrito)
+
+datos_depto_distrito <- base_matricula |> 
+  group_by(DEPARTAMENTO_CE,DISTRITO_CE) |> 
+  summarise(Dato=n(),.groups = "drop_last") |>  #Incorporamos .groups= = "drop_last" 
+  mutate(Total_depto=sum(Dato),
+         Representacion=(Dato/Total_depto)*100)
+View(datos_depto_distrito)
+
+datos_depto_distrito <- base_matricula |> 
+  group_by(DEPARTAMENTO_CE,DISTRITO_CE) |> 
+  summarise(Dato=n(),.groups = "drop") |>  #Incorporamos .groups= = "drop" 
+  mutate(Total_depto=sum(Dato))
+View(datos_depto_distrito)
+
+datos_depto_distrito <- base_matricula |> 
+  group_by(DEPARTAMENTO_CE,DISTRITO_CE) |> 
+  summarise(Dato=n(),.groups = "keep") |>
+  ungroup() |> 
+  mutate(Total_nal=sum(Dato))
+View(datos_depto_distrito)
+
+base_matricula |> 
+  mutate(total=n())
+
+# 6. Uso de left_join, semi_join, anti_join
+
+# Primer ejemplo: left_join y full_join
+
+regular <- readxl::read_xlsx("data/raw/matricula_regular.xlsx")
+mod_flexible <- readxl::read_xlsx("data/raw/matricula_flexible.xlsx")
+especial <- readxl::read_xlsx("data/raw/matricula_especial_1.xlsx")
+
+sum(regular$Matricula)
+sum(mod_flexible$Matricula_flexibles)
+sum(especial$Matricula_especial)
+
+total <- regular |> 
+  left_join(mod_flexible,by = c("EDAD_JUNIO" = "EDAD_JUNIO",
+                                "SEXO" = "SEXO")) |> 
+  left_join(especial,by = c("EDAD_JUNIO" = "AÑOS_JUNIO",
+                            "SEXO" = "sexo")) |> 
+  mutate(Total=rowSums(pick(Matricula,Matricula_flexibles,Matricula_especial),na.rm = TRUE))
+
+sum(total$Matricula)
+sum(total$Matricula_flexibles,na.rm = TRUE)
+sum(total$Matricula_especial,na.rm = TRUE)
+
+total <- regular |> 
+  full_join(mod_flexible,by = c("EDAD_JUNIO" = "EDAD_JUNIO",
+                                "SEXO" = "SEXO")) |> 
+  full_join(especial,by = c("EDAD_JUNIO" = "AÑOS_JUNIO",
+                            "SEXO" = "sexo")) |> 
+  mutate(Total=rowSums(pick(Matricula,Matricula_flexibles,Matricula_especial),na.rm = TRUE))
+
+sum(total$Matricula,na.rm = TRUE)
+sum(total$Matricula_flexibles,na.rm = TRUE)
+sum(total$Matricula_especial,na.rm = TRUE)
+
+especial <- readxl::read_xlsx("data/raw/matricula_especial_2.xlsx")
+rm(total)
+
+total <- regular |> 
+  full_join(mod_flexible,by = c("EDAD_JUNIO" = "EDAD_JUNIO",
+                                "SEXO" = "SEXO")) |> 
+  full_join(especial,by = c("EDAD_JUNIO" = "AÑOS_JUNIO",
+                            "SEXO" = "sexo")) |> 
+  mutate(Total=rowSums(pick(Matricula,Matricula_flexibles,Matricula_especial),na.rm = TRUE))
+
+# Segundo ejemplo: left_join
+
+# install.packages("nycflights13")
+library(tidyverse)
+library(nycflights13)
+?flights
+
+# Tabla IZQUIERDA (Principal): 100 vuelos aleatorios
+set.seed(123)
+mis_vuelos <- flights |> 
+  select(year, month, day, tailnum, carrier) |> 
+  sample_n(100)
+
+# Tabla DERECHA (Complementaria): Información de los aviones
+# Esta tabla tiene el año de fabricación (year) y el modelo
+info_aviones <- planes |> 
+  select(tailnum, year_built = year, model, engines)
+
+vuelos_enriquecidos <- mis_vuelos |> 
+  left_join(info_aviones, by = "tailnum")
+
+vuelos_enriquecidos <- left_join(mis_vuelos,info_aviones, by = "tailnum")
+
+# Tecer ejemplo: anti_join
+
+# ¿Qué aviones de mis vuelos no tienen información en la tabla de aviones?
+aviones_perdidos <- mis_vuelos |> 
+  anti_join(info_aviones, by = "tailnum") |> 
+  distinct(tailnum)
+
+print(aviones_perdidos)
+
+# Cuarto ejemplo: inner_join
+
+library(tidyverse)
+library(nycflights13)
+
+# Tenemos nuestra tabla de vuelos (muchas filas)
+mis_vuelos <- flights |> select(tailnum, carrier, flight)
+
+# Tenemos nuestra tabla de aviones (catálogo)
+info_aviones <- planes |> select(tailnum, model, year)
+
+# Ejecutamos el INNER JOIN
+vuelos_completos <- mis_vuelos |> 
+  inner_join(info_aviones, by = "tailnum")
+View(vuelos_completos)
 
 
-  
-  
+
   
 
 
