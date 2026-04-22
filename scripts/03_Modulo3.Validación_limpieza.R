@@ -23,8 +23,17 @@ base_fechas <- base_fechas |>
   mutate(Fecha_nueva=as.Date(Fecha_texto,format = "%Y-%m-%d"))
 glimpse(base_fechas)
 
-#%b mes abreviado (MAY)
-#%y año con dos digitos
+library(lubridate)
+fecha <- "21-04-2024"
+class(fecha)
+
+fecha <- dmy(fecha)
+class(fecha)
+
+#%Y (Mayúscula): Año de 4 dígitos (2024).
+#%y (Minúscula): Año de 2 dígitos (24).
+#%b (Minúscula): Mes abreviado (ene, feb, mar).
+#%m (Minúscula): Mes en número (01, 02).
 
 #Cambiar fechas con formato de número de Excel a date en R
 
