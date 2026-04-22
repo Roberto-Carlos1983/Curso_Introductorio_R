@@ -388,12 +388,16 @@ diamantes_buenos_color <- diamantes |>
 # 5. Ejemplos del group_by
 
 # Primer ejmeplo: Suma de casos por departamento
+file.choose()
+library(tidyverse)
 
-base_matricula <- read.csv("data/raw/Muestra2025.csv")
+dplyr::group_by()
+
+base_matricula <- read.csv("C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R\\data\\raw\\Muestra2025.csv")
 
 datos_depto <- base_matricula |> 
   group_by(DEPARTAMENTO_CE) |> 
-  summarise(Dato=n())
+  summarise(Matricula=n())
 View(datos_depto)
 
 datos_depto_distrito <- base_matricula |> 
@@ -402,7 +406,7 @@ datos_depto_distrito <- base_matricula |>
   mutate(Total_depto=sum(Dato))
 View(datos_depto_distrito)
 
-datos_depto_distrito <- base_matricula |> 
+datos_depto_distrito_rev <- base_matricula |> 
   group_by(DEPARTAMENTO_CE,DISTRITO_CE) |> 
   summarise(Dato=n(),.groups = "keep") |>  #Incorporamos .groups= = "keep" 
   mutate(Total_depto=sum(Dato))
@@ -414,6 +418,7 @@ datos_depto_distrito <- base_matricula |>
   mutate(Total_depto=sum(Dato),
          Representacion=(Dato/Total_depto)*100)
 View(datos_depto_distrito)
+sum(datos_depto_distrito$Representacion)
 
 datos_depto_distrito <- base_matricula |> 
   group_by(DEPARTAMENTO_CE,DISTRITO_CE) |> 
@@ -428,16 +433,27 @@ datos_depto_distrito <- base_matricula |>
   mutate(Total_nal=sum(Dato))
 View(datos_depto_distrito)
 
+analisis <- base_datos |> 
+  select() |> 
+  filter() |> 
+  group_by(....,....) |> 
+  summarise(Dato=n(),.groups = "drop_last")
+
+profundizar_analizar <- analisis |> 
+  filter() |> 
+  mutate()
+
 base_matricula |> 
   mutate(total=n())
 
-# 6. Uso de left_join, semi_join, anti_join
+# 6. Uso de left_join, semi_join, anti_join, full_join
 
 # Primer ejemplo: left_join y full_join
+file.choose()
 
-regular <- readxl::read_xlsx("data/raw/matricula_regular.xlsx")
-mod_flexible <- readxl::read_xlsx("data/raw/matricula_flexible.xlsx")
-especial <- readxl::read_xlsx("data/raw/matricula_especial_1.xlsx")
+regular <- readxl::read_xlsx("C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R\\data\\raw\\matricula_regular.xlsx")
+mod_flexible <- readxl::read_xlsx("C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R\\data\\raw\\matricula_flexible.xlsx")
+especial <- readxl::read_xlsx("C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R\\data\\raw\\matricula_especial_1.xlsx")
 
 sum(regular$Matricula)
 sum(mod_flexible$Matricula_flexibles)
@@ -445,7 +461,7 @@ sum(especial$Matricula_especial)
 
 total <- regular |> 
   left_join(mod_flexible,by = c("EDAD_JUNIO" = "EDAD_JUNIO",
-                                "SEXO" = "SEXO")) |> 
+                                "SEXO"       = "SEXO"       )) |> 
   left_join(especial,by = c("EDAD_JUNIO" = "AÑOS_JUNIO",
                             "SEXO" = "sexo")) |> 
   mutate(Total=rowSums(pick(Matricula,Matricula_flexibles,Matricula_especial),na.rm = TRUE))
@@ -454,7 +470,7 @@ sum(total$Matricula)
 sum(total$Matricula_flexibles,na.rm = TRUE)
 sum(total$Matricula_especial,na.rm = TRUE)
 
-total <- regular |> 
+total_rev <- regular |> 
   full_join(mod_flexible,by = c("EDAD_JUNIO" = "EDAD_JUNIO",
                                 "SEXO" = "SEXO")) |> 
   full_join(especial,by = c("EDAD_JUNIO" = "AÑOS_JUNIO",
@@ -465,22 +481,28 @@ sum(total$Matricula,na.rm = TRUE)
 sum(total$Matricula_flexibles,na.rm = TRUE)
 sum(total$Matricula_especial,na.rm = TRUE)
 
-especial <- readxl::read_xlsx("data/raw/matricula_especial_2.xlsx")
+
+especial <- readxl::read_xlsx("C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R\\data\\raw\\matricula_especial_2.xlsx")
 rm(total)
 
-total <- regular |> 
+total_rev3 <- regular |> 
   full_join(mod_flexible,by = c("EDAD_JUNIO" = "EDAD_JUNIO",
                                 "SEXO" = "SEXO")) |> 
   full_join(especial,by = c("EDAD_JUNIO" = "AÑOS_JUNIO",
                             "SEXO" = "sexo")) |> 
-  mutate(Total=rowSums(pick(Matricula,Matricula_flexibles,Matricula_especial),na.rm = TRUE))
+  mutate(Total=rowSums(pick(Matricula,Matricula_flexibles,Matricula_especial),na.rm = TRUE)) |> 
+  arrange(EDAD_JUNIO)
+
+sum(total_rev3$Matricula,na.rm = TRUE)
+sum(total_rev3$Matricula_flexibles,na.rm = TRUE)
+sum(total_rev3$Matricula_especial,na.rm = TRUE)
 
 # Segundo ejemplo: left_join
 
-# install.packages("nycflights13")
+install.packages("nycflights13")
 library(tidyverse)
 library(nycflights13)
-?flights
+flights
 
 # Tabla IZQUIERDA (Principal): 100 vuelos aleatorios
 set.seed(123)
@@ -498,12 +520,14 @@ vuelos_enriquecidos <- mis_vuelos |>
 
 vuelos_enriquecidos <- left_join(mis_vuelos,info_aviones, by = "tailnum")
 
+info_aviones <- planes |> 
+  select(tailnum, year, model, engines)
+
 # Tecer ejemplo: anti_join
 
 # ¿Qué aviones de mis vuelos no tienen información en la tabla de aviones?
 aviones_perdidos <- mis_vuelos |> 
-  anti_join(info_aviones, by = "tailnum") |> 
-  distinct(tailnum)
+  anti_join(info_aviones, by = "tailnum")
 
 print(aviones_perdidos)
 
@@ -522,6 +546,18 @@ info_aviones <- planes |> select(tailnum, model, year)
 vuelos_completos <- mis_vuelos |> 
   inner_join(info_aviones, by = "tailnum")
 View(vuelos_completos)
+
+
+filter()
+select()
+mutate()
+group_by()
+summarise()
+left_join()
+anti_join()
+full_join()
+
+
 
 
 

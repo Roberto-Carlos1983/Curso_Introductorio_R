@@ -309,6 +309,80 @@ Roberto Rodríguez
 <section id="conociendo-el-panel-de-rstudio" class="slide level2">
 <h2>8. Conociendo el panel de RStudio</h2>
 <p><a href="https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html" class="uri">https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html</a></p>
+</section>
+<section id="trabajando-con-fechas" class="slide level2">
+<h2>9. Trabajando con fechas</h2>
+<h3 id="comparativa-de-formatos-de-fecha">Comparativa de Formatos de Fecha</h3>
+<div id="tbl-fechas" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-tbl">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fechas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Tipos de almacenamiento de fechas en R
+</figcaption>
+<div aria-describedby="tbl-fechas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Formato</th>
+<th style="text-align: center;">Cómo se ve en R (<code>class</code>)</th>
+<th style="text-align: center;">Valor real “bajo el capó”</th>
+<th style="text-align: center;">¿Se puede operar?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Character</strong></td>
+<td style="text-align: center;"><code>&lt;chr&gt;</code></td>
+<td style="text-align: center;"><code>"2024-04-21"</code> (Texto)</td>
+<td style="text-align: center;">No (Es solo dibujo)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Date</strong></td>
+<td style="text-align: center;"><code>&lt;date&gt;</code></td>
+<td style="text-align: center;"><code>19834</code> (Días desde 1970)</td>
+<td style="text-align: center;"><strong>Sí</strong> (Aritmética de días)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>POSIXct</strong></td>
+<td style="text-align: center;"><code>&lt;dttm&gt;</code></td>
+<td style="text-align: center;"><code>1713700800</code> (Segundos)</td>
+<td style="text-align: center;"><strong>Sí</strong> (Incluye horas)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Integer</strong></td>
+<td style="text-align: center;"><code>&lt;int&gt;</code></td>
+<td style="text-align: center;"><code>20240421</code> (Número)</td>
+<td style="text-align: center;"><strong>No</strong> (Peligro de error)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ul>
+<li><p>La ilusión óptica de R: Señala que ver “2024-01-01” en la consola no garantiza que sea una fecha. Insiste en que siempre deben mirar la etiqueta debajo del nombre de la columna (<chr> vs <date>).</date></chr></p></li>
+<li><p>¿Por qué importa el formato Date?: * Ordenamiento: Si es texto, “10-Ene” irá antes que “02-Ene” (orden alfabético). Si es fecha, R entiende la cronología.</p></li>
+</ul>
+<p>Cálculos: Solo en formato <date> puedes hacer operaciones como fecha_fin - fecha_inicio.</date></p>
+<ul>
+<li><p>El peligro del formato Integer (20240531): * Explícales que si a ese “número” le suman 1, R les dará 20240532, lo cual destruye la integridad de los datos porque esa fecha no existe. Siempre hay que pasar por char y luego a Date.</p></li>
+<li><p>El origen de los tiempos (Unix Epoch): Como dato curioso (y útil para entender errores), diles que para R el “tiempo empezó” el 1 de enero de 1970. Si ven un 0 en un formato de fecha convertido a número, es ese día.</p></li>
+</ul>
+</section>
+<section id="errores-comunes-al-trabajar-con-fechas" class="slide level2">
+<h2>Errores Comunes al trabajar con Fechas ⚠️</h2>
+<ul>
+<li><p><strong>Confundir el formato visual con el tipo de dato:</strong> Creer que porque dice “2024-01-01” ya es una fecha (recordar siempre verificar el <code>&lt;chr&gt;</code> vs <code>&lt;date&gt;</code>).</p></li>
+<li><p><strong>Ignorar el orden de la función <code>lubridate</code>:</strong> Usar <code>ymd()</code> cuando la fecha viene como “31-12-2024” (Día-Mes-Año). R devolverá <code>NA</code>.</p></li>
+<li><p><strong>Intentar aritmética con formatos Texto o Integer:</strong> Hacer <code>20240531 + 1</code> y obtener <code>20240532</code> (una fecha inexistente).</p></li>
+<li><p><strong>No gestionar los NA tras la conversión:</strong> Si una fecha está mal escrita (ej. “30-Feb”), <code>lubridate</code> la convertirá en <code>NA</code>. Si no revisas, perderás datos en tus cálculos.</p></li>
+<li><p><strong>Cargar archivos de Excel con fechas numéricas:</strong> Excel cuenta los días desde 1900 y R desde 1970. Si no se especifica el “origin”, las fechas saldrán con 70 años de error.</p></li>
+</ul>
 
 </section>
     </div>
