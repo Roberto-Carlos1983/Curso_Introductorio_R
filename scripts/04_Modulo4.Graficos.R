@@ -3,10 +3,13 @@
 # Propósito: Aprender la lógica de ggplot2 y librerias para gráficos interactivos
 # =========================================================
 
+#https://r-charts.com/colors/
+#https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
+
 # 1. Gráfico de barras (geom_bar)
 
 library(tidyverse)
-?mpg
+mpg
 unique(mpg$class)
 unique(mpg$drv)
 
@@ -14,7 +17,7 @@ mpg |>
   count(class)
 
 ggplot(data = mpg, mapping = aes(x = class, fill = drv)) +
-  geom_bar(position = "dodge", color = "black", alpha = 0.5) + 
+  geom_bar(position = "dodge", color = "#3182bd", alpha = 0.3) + 
   labs(title = "Distribución de clases de vehículos",
        subtitle = "Segmentado por tipo de tracción (drv)",
        x = "Clase de vehículo",
@@ -23,7 +26,7 @@ ggplot(data = mpg, mapping = aes(x = class, fill = drv)) +
   theme_minimal()
 
 ggplot(data = mpg, mapping = aes(x = class, fill = drv)) +
-  geom_bar(position = "dodge", color = "black", alpha = 0.5) + 
+  geom_bar(position = "dodge", color = "black", alpha = 0.6) + 
   labs(title = "Distribución de clases de vehículos",
        subtitle = "Segmentado por tipo de tracción (drv)",
        x = "Clase de vehículo",
@@ -43,7 +46,7 @@ ggplot(data = mpg, mapping = aes(x = class, fill = drv)) +
   theme_void()
 
 ggplot(data = mpg, mapping = aes(x = class, fill = drv)) +
-  geom_bar(position = "identity", alpha = 0.5) +
+  geom_bar(position = "identity", alpha = 0.6) +
   theme_light()
 
 # 2. Gráfico de barras (geom_col)
@@ -54,32 +57,47 @@ resumen_datos <- mpg |>
 
 # Ahora graficamos con geom_col
 ggplot(data = resumen_datos, mapping = aes(x = class, y = total)) +
-  geom_col(fill = "lightblue") +
-  labs(title = "Uso de geom_col (Tú le das el número exacto)")
+  geom_col(fill = "#e34a33", color = "black") +
+  labs(title = "Gráfico de barras",
+       y = "Conteo de vehiculos")
 
 # 3.Gráfico de lineas
 
 library(tidyverse)
-?economics
+economics
 
 ggplot(data = economics, mapping = aes(x = date, y = unemploy)) +
   geom_line(color = "darkblue",
-            linewidth = 1.2,
+            linewidth = 0.5,
             linetype = "solid") +
   scale_x_date(date_breaks = "5 years",
                date_labels = "%Y") +
   labs(title = "Evolución del Desempleo en EE.UU.",
-       subtitle = "Uso correcto del parámetro linewidth",
+       subtitle = "Estados Unidos",
        x = "Línea de Tiempo (Años)",
        y = "Número de Desempleados") +
   theme_bw()
 
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_line(color = "darkblue",
+            linewidth = 0.5,
+            linetype = "solid") +
+  scale_x_date(date_breaks = "5 years",
+               date_labels = "%Y") +
+  labs(title = "Evolución del Desempleo en EE.UU.",
+       subtitle = "Estados Unidos",
+       x = "Línea de Tiempo (Años)",
+       y = "Número de Desempleados") +
+  theme_bw()
+
+
 # 3.Box-plot
+mpg
 
 ggplot(data = mpg, mapping = aes(x = class, y = hwy, fill = class)) +
-  geom_boxplot(outlier.colour = "red",
+  geom_boxplot(outlier.colour = "black",
                outlier.shape = 5,
-               outlier.size = 2,
+               outlier.size = 5,
                show.legend = FALSE) +
   facet_wrap(facets = vars(year), ncol = 1) + 
   coord_flip() +
@@ -91,7 +109,7 @@ ggplot(data = mpg, mapping = aes(x = class, y = hwy, fill = class)) +
 #vars(year)
 
 # 4. Gráfico de dispersion: interactivo
-
+install.packages("plotly")
 library(plotly)
 
 # Creamos el objeto ggplot de forma explícita
@@ -106,10 +124,27 @@ grafico_base <- ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = cla
 # Convertimos a dinámico
 ggplotly(p = grafico_base)
 
+# Ejemplo de matricula
+file.choose()
+base_matricula <- read.csv("C:\\BK ROBERTO RODRIGUEZ\\MINED\\Capacitación_R\\Curso_Introductorio_R\\data\\raw\\Muestra2025.csv")
+
+matricula_depto <- base_matricula |> 
+  group_by(DEPARTAMENTO_CE,SEXO) |> 
+  summarise(Matrícula=n())
+View(matricula_depto)
+
+ggplot(matricula_depto,aes(x = SEXO,y = Matrícula,fill = SEXO)) +
+  geom_col() +
+  facet_wrap(~DEPARTAMENTO_CE,scales="free") +
+  geom_text(aes(label=Matrícula),
+            position = position_stack(vjust=0.5),
+            size = 3)
+
 # 5. Gráfico de dispersion: interactivo
 
 # install.packages("plotly")
 library(plotly)
+?iris
 
 fig <- plot_ly(
   data = iris, 
@@ -124,7 +159,8 @@ fig <- plot_ly(
 )
 
 # Personalizar el diseño (Layout)
-fig <- fig %>% layout(
+fig <- fig %>%
+  layout(
   title = "Análisis 3D de Iris",
   scene = list(
     xaxis = list(title = 'Largo Sépalo'),
@@ -149,4 +185,9 @@ plot_ly(
     xaxis = list(title = "Motor (L)"),
     yaxis = list(title = "Millas por Galón")
   )
+
+
+
+
+
 
