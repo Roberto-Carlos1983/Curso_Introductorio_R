@@ -1,0 +1,87 @@
+---
+title: "Reportes Dinámicos"
+author: "Roberto Rodríguez"
+format: 
+  revealjs:
+    theme: sky        # Temas: simple, beige, blood, night, moon, sky
+    transition: slide # Transición: fade, slide, convex, concave, zoom
+    scrollable: true
+    logo: tu_logo.png # Opcional
+    footer: "Curso Introductorio R"
+editor: visual
+---
+
+# Introducción a Quarto {background-color="#1c5253"}
+
+## ¿Qué es Quarto?
+
+Es el sucesor de **R Markdown**. Un sistema de publicación de código abierto que permite:
+
+-   **Combinar** texto narrativo y código ejecutable.
+-   **Exportar** a Word, PDF, HTML, presentaciones y sitios web.
+-   **Garantizar** la reproducibilidad (cualquiera puede replicar tu análisis).
+
+## El Flujo de Trabajo
+
+Para crear un documento, pasamos por tres etapas:
+
+1.  **YAML:** La configuración (el encabezado entre `---`).
+2.  **Markdown:** El texto con formato (negritas, títulos, listas).
+3.  **Code Chunks:** Los bloques donde vive nuestro código R.
+
+# La Magia del Markdown {background-color="#447099"}
+
+## Formateo Básico de Texto
+
+Puedes escribir texto normal y darle estilo fácilmente:
+
+-   `**Negrita**` -\> **Negrita**
+-   `*Cursiva*` -\> *Cursiva*
+-   `[Enlace](https://quarto.org)` -\> [Enlace](https://quarto.org)
+-   `$E = mc^2$` -\> $E = mc^2$ (Fórmulas matemáticas)
+
+## Organización por Títulos
+
+Usamos el símbolo `#`:
+
+-   `# Título 1`: Crea una nueva sección (diapositiva de título).
+-   `## Título 2`: Crea una nueva diapositiva con ese encabezado.
+-   `### Título 3`: Subtítulos dentro de la lámina.
+
+# Bloques de Código (Chunks) {background-color="#704499"}
+
+## Configuración de los Chunks
+
+Dentro de un bloque `{r}`, usamos el símbolo `#|` (hash-pipe) para dar instrucciones:
+
+-   `#| echo: true`: Muestra el código en la lámina.
+-   `#| echo: false`: Oculta el código, solo muestra el resultado (ideal para jefes).
+-   `#| warning: false`: Evita mensajes de advertencia.
+-   `#| output-location: fragment`: El gráfico aparece después de un clic.
+
+## Ejemplo de Código en Vivo
+
+Podemos integrar el gráfico que hicimos la anterior clase:
+
+```{r}
+#| echo: true
+#| fig-align: "center"
+
+library(ggplot2)
+
+ggplot(mpg, aes(displ, hwy, color = class)) +
+  geom_point(alpha = 0.5) +
+  theme_minimal()
+```
+
+## Guía de Instalación Manual (Si no se tiene instalado)
+
+Cuando se tienen versiones muy viejas de RStudio o que se prefiere instalar la versión más reciente, seguir los siguientes pasos:
+
+1.  **Ir a la web oficial:** [quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
+
+2.  **Descargar el instalador:** Elegir el "Capa de instalación" según su sistema operativo (Windows `.msi`, macOS `.pkg` o Linux).
+
+3.  **Ejecutar e instalar:** Es un proceso estándar de "Siguiente, siguiente, finalizar".
+
+4.  **Reiniciar RStudio:** Esto es vital para que RStudio detecte el nuevo motor de Quarto.

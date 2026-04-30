@@ -1,0 +1,34 @@
+---
+title: "Reporte_ejecutivo"
+author: "Roberto Rodríguez"
+format:
+  html:
+    theme: cosmo
+    self-contained: true
+    page-layout: custom
+    fontsize: 1.5em
+    linestretch: 1.5
+    margin-top: 1em
+    margin-bottom: 1em
+---
+
+## Introducción
+
+Este es un reporte ejecutivo de introducción a Quarto.
+
+## Visualización de Datos
+
+A continuación, se presenta la distribución de eficiencia por clase de vehículo:
+
+```{r}
+#| label: grafico-boxplot
+#| fig-cap: "Distribución de eficiencia (Millas/Galón) por categoría."
+#| warning: false
+
+library(tidyverse)
+
+ggplot(data = mpg, mapping = aes(x = class, y = hwy, fill = class)) +
+  geom_boxplot(notch = TRUE, show.legend = FALSE) +
+  theme_minimal() +
+  labs(x = "Categoría", y = "Eficiencia")
+```
