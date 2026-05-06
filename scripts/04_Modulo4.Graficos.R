@@ -135,10 +135,10 @@ View(matricula_depto)
 
 ggplot(matricula_depto,aes(x = SEXO,y = Matrícula,fill = SEXO)) +
   geom_col() +
-  facet_wrap(~DEPARTAMENTO_CE,scales="free") +
+  facet_wrap(~DEPARTAMENTO_CE) +
   geom_text(aes(label=Matrícula),
-            position = position_stack(vjust=0.5),
-            size = 3)
+            position = position_stack(vjust=1.2),
+            size = 5)
 
 # 5. Gráfico de dispersion: interactivo
 
